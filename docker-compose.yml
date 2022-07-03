@@ -49,3 +49,11 @@ services:
       - "5432:5432"
     networks:
       - webapp
+
+  adminer:
+    image: adminer
+    container_name: ${APP_NAME}_adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - webapp

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +20,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'address',
+        'identity_number',
+        'dob',
+        'gender',
+        'avatar',
+        'phone_number',
+        'otp',
+        'created_at',
+        'updated_at',
+        'is_verify',
+        'portrait',
+        'identity_image_front',
+        'identity_image_back',
     ];
 
     /**
@@ -29,6 +41,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'otp',
         'password',
         'remember_token',
     ];

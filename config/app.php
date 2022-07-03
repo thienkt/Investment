@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\FortifyServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -185,6 +186,7 @@ return [
         /*
          * Package Service Providers...
          */
+        FortifyServiceProvider::class,
 
         /*
          * Application Service Providers...
