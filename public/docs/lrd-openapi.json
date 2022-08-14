@@ -552,7 +552,7 @@
                 }
             }
         },
-        "sanctum/csrf-cookie": {
+        "api/csrf-cookie": {
             "get": {
                 "description": "",
                 "parameters": [],
