@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fund extends Model
+class Package extends Model
 {
     use HasFactory;
 
@@ -15,19 +15,17 @@ class Fund extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'code',
         'name',
-        'description',
-        'historical_data_url',
+        'investment_amount'
     ];
 
-    public function credential()
+    public function owner()
     {
-        return $this->belongsTo(FundCredential::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function packages()
+    public function funds()
     {
-       return $this->belongsToMany(Package::class);
+       return $this->belongsToMany(Fund::class)->withPivot('allocation_percentage');
     }
 }
