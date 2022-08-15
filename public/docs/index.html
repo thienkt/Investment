@@ -470,7 +470,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/login" @click="highlightSidebar(8)" v-if="!docs[8]['isHidden']">
+                            <a href="#GET-api/funds" @click="highlightSidebar(8)" v-if="!docs[8]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -482,25 +482,25 @@
                                     font-bold
                                     leading-none
                                     rounded
-                                    text--100 bg--500
-                                    text-black bg-red-500
+                                    text-green-100 bg-green-500
+                                    text- bg--500
                                     text--100 bg--500
                                     text--100 bg--500
                                     text- bg-
                                     ">
-                                    POST
+                                    GET
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[8]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[8]['responseOk'] === null">api/login</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[8]['responseOk'] === null">api/funds</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[8]['responseOk'] === true">
-                                        api/login -
+                                        api/funds -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[8]['responseCode'] + ', Took:' + docs[8]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[8]['responseOk'] === false">
-                                        api/login -
+                                        api/funds -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[8]['responseCode'] + ', Took:' + docs[8]['responseTime'] + 'ms'">
@@ -512,7 +512,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/logout" @click="highlightSidebar(9)" v-if="!docs[9]['isHidden']">
+                            <a href="#GET-api/funds/{fund}" @click="highlightSidebar(9)" v-if="!docs[9]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -524,25 +524,25 @@
                                     font-bold
                                     leading-none
                                     rounded
-                                    text--100 bg--500
-                                    text-black bg-red-500
+                                    text-green-100 bg-green-500
+                                    text- bg--500
                                     text--100 bg--500
                                     text--100 bg--500
                                     text- bg-
                                     ">
-                                    POST
+                                    GET
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[9]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[9]['responseOk'] === null">api/logout</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[9]['responseOk'] === null">api/funds/{fund}</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[9]['responseOk'] === true">
-                                        api/logout -
+                                        api/funds/{fund} -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[9]['responseCode'] + ', Took:' + docs[9]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[9]['responseOk'] === false">
-                                        api/logout -
+                                        api/funds/{fund} -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[9]['responseCode'] + ', Took:' + docs[9]['responseTime'] + 'ms'">
@@ -554,7 +554,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/forgot-password" @click="highlightSidebar(10)" v-if="!docs[10]['isHidden']">
+                            <a href="#POST-api/login" @click="highlightSidebar(10)" v-if="!docs[10]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -575,16 +575,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[10]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[10]['responseOk'] === null">api/forgot-password</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[10]['responseOk'] === null">api/login</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[10]['responseOk'] === true">
-                                        api/forgot-password -
+                                        api/login -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[10]['responseCode'] + ', Took:' + docs[10]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[10]['responseOk'] === false">
-                                        api/forgot-password -
+                                        api/login -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[10]['responseCode'] + ', Took:' + docs[10]['responseTime'] + 'ms'">
@@ -596,7 +596,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/reset-password" @click="highlightSidebar(11)" v-if="!docs[11]['isHidden']">
+                            <a href="#POST-api/logout" @click="highlightSidebar(11)" v-if="!docs[11]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -617,16 +617,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[11]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[11]['responseOk'] === null">api/reset-password</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[11]['responseOk'] === null">api/logout</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[11]['responseOk'] === true">
-                                        api/reset-password -
+                                        api/logout -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[11]['responseCode'] + ', Took:' + docs[11]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[11]['responseOk'] === false">
-                                        api/reset-password -
+                                        api/logout -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[11]['responseCode'] + ', Took:' + docs[11]['responseTime'] + 'ms'">
@@ -638,7 +638,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/register" @click="highlightSidebar(12)" v-if="!docs[12]['isHidden']">
+                            <a href="#POST-api/forgot-password" @click="highlightSidebar(12)" v-if="!docs[12]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -659,16 +659,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[12]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[12]['responseOk'] === null">api/register</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[12]['responseOk'] === null">api/forgot-password</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[12]['responseOk'] === true">
-                                        api/register -
+                                        api/forgot-password -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[12]['responseCode'] + ', Took:' + docs[12]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[12]['responseOk'] === false">
-                                        api/register -
+                                        api/forgot-password -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[12]['responseCode'] + ', Took:' + docs[12]['responseTime'] + 'ms'">
@@ -680,7 +680,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/email/verification-notification" @click="highlightSidebar(13)" v-if="!docs[13]['isHidden']">
+                            <a href="#POST-api/reset-password" @click="highlightSidebar(13)" v-if="!docs[13]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -701,16 +701,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[13]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[13]['responseOk'] === null">api/email/verification-notification</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[13]['responseOk'] === null">api/reset-password</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[13]['responseOk'] === true">
-                                        api/email/verification-notification -
+                                        api/reset-password -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[13]['responseCode'] + ', Took:' + docs[13]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[13]['responseOk'] === false">
-                                        api/email/verification-notification -
+                                        api/reset-password -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[13]['responseCode'] + ', Took:' + docs[13]['responseTime'] + 'ms'">
@@ -722,7 +722,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/user/confirm-password" @click="highlightSidebar(14)" v-if="!docs[14]['isHidden']">
+                            <a href="#POST-api/register" @click="highlightSidebar(14)" v-if="!docs[14]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -743,16 +743,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[14]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[14]['responseOk'] === null">api/user/confirm-password</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[14]['responseOk'] === null">api/register</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[14]['responseOk'] === true">
-                                        api/user/confirm-password -
+                                        api/register -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[14]['responseCode'] + ', Took:' + docs[14]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[14]['responseOk'] === false">
-                                        api/user/confirm-password -
+                                        api/register -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[14]['responseCode'] + ', Took:' + docs[14]['responseTime'] + 'ms'">
@@ -764,7 +764,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/two-factor-challenge" @click="highlightSidebar(15)" v-if="!docs[15]['isHidden']">
+                            <a href="#POST-api/email/verification-notification" @click="highlightSidebar(15)" v-if="!docs[15]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -785,16 +785,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[15]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[15]['responseOk'] === null">api/two-factor-challenge</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[15]['responseOk'] === null">api/email/verification-notification</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[15]['responseOk'] === true">
-                                        api/two-factor-challenge -
+                                        api/email/verification-notification -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[15]['responseCode'] + ', Took:' + docs[15]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[15]['responseOk'] === false">
-                                        api/two-factor-challenge -
+                                        api/email/verification-notification -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[15]['responseCode'] + ', Took:' + docs[15]['responseTime'] + 'ms'">
@@ -806,7 +806,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/user/two-factor-authentication" @click="highlightSidebar(16)" v-if="!docs[16]['isHidden']">
+                            <a href="#POST-api/user/confirm-password" @click="highlightSidebar(16)" v-if="!docs[16]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -827,16 +827,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[16]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[16]['responseOk'] === null">api/user/two-factor-authentication</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[16]['responseOk'] === null">api/user/confirm-password</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[16]['responseOk'] === true">
-                                        api/user/two-factor-authentication -
+                                        api/user/confirm-password -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[16]['responseCode'] + ', Took:' + docs[16]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[16]['responseOk'] === false">
-                                        api/user/two-factor-authentication -
+                                        api/user/confirm-password -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[16]['responseCode'] + ', Took:' + docs[16]['responseTime'] + 'ms'">
@@ -848,7 +848,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/user/confirmed-two-factor-authentication" @click="highlightSidebar(17)" v-if="!docs[17]['isHidden']">
+                            <a href="#POST-api/two-factor-challenge" @click="highlightSidebar(17)" v-if="!docs[17]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -869,16 +869,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[17]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[17]['responseOk'] === null">api/user/confirmed-two-factor-authentication</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[17]['responseOk'] === null">api/two-factor-challenge</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[17]['responseOk'] === true">
-                                        api/user/confirmed-two-factor-authentication -
+                                        api/two-factor-challenge -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[17]['responseCode'] + ', Took:' + docs[17]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[17]['responseOk'] === false">
-                                        api/user/confirmed-two-factor-authentication -
+                                        api/two-factor-challenge -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[17]['responseCode'] + ', Took:' + docs[17]['responseTime'] + 'ms'">
@@ -890,7 +890,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-api/user/two-factor-recovery-codes" @click="highlightSidebar(18)" v-if="!docs[18]['isHidden']">
+                            <a href="#POST-api/user/two-factor-authentication" @click="highlightSidebar(18)" v-if="!docs[18]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -911,16 +911,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[18]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[18]['responseOk'] === null">api/user/two-factor-recovery-codes</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[18]['responseOk'] === null">api/user/two-factor-authentication</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[18]['responseOk'] === true">
-                                        api/user/two-factor-recovery-codes -
+                                        api/user/two-factor-authentication -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[18]['responseCode'] + ', Took:' + docs[18]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[18]['responseOk'] === false">
-                                        api/user/two-factor-recovery-codes -
+                                        api/user/two-factor-authentication -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[18]['responseCode'] + ', Took:' + docs[18]['responseTime'] + 'ms'">
@@ -932,7 +932,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-_ignition/execute-solution" @click="highlightSidebar(19)" v-if="!docs[19]['isHidden']">
+                            <a href="#POST-api/user/confirmed-two-factor-authentication" @click="highlightSidebar(19)" v-if="!docs[19]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -953,16 +953,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[19]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[19]['responseOk'] === null">_ignition/execute-solution</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[19]['responseOk'] === null">api/user/confirmed-two-factor-authentication</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[19]['responseOk'] === true">
-                                        _ignition/execute-solution -
+                                        api/user/confirmed-two-factor-authentication -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[19]['responseCode'] + ', Took:' + docs[19]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[19]['responseOk'] === false">
-                                        _ignition/execute-solution -
+                                        api/user/confirmed-two-factor-authentication -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[19]['responseCode'] + ', Took:' + docs[19]['responseTime'] + 'ms'">
@@ -974,7 +974,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#POST-_ignition/update-config" @click="highlightSidebar(20)" v-if="!docs[20]['isHidden']">
+                            <a href="#POST-api/user/two-factor-recovery-codes" @click="highlightSidebar(20)" v-if="!docs[20]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -995,16 +995,16 @@
                                     POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[20]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[20]['responseOk'] === null">_ignition/update-config</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[20]['responseOk'] === null">api/user/two-factor-recovery-codes</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[20]['responseOk'] === true">
-                                        _ignition/update-config -
+                                        api/user/two-factor-recovery-codes -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[20]['responseCode'] + ', Took:' + docs[20]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[20]['responseOk'] === false">
-                                        _ignition/update-config -
+                                        api/user/two-factor-recovery-codes -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[20]['responseCode'] + ', Took:' + docs[20]['responseTime'] + 'ms'">
@@ -1016,7 +1016,7 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#PUT-api/user/profile-information" @click="highlightSidebar(21)" v-if="!docs[21]['isHidden']">
+                            <a href="#POST-_ignition/execute-solution" @click="highlightSidebar(21)" v-if="!docs[21]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -1029,24 +1029,24 @@
                                     leading-none
                                     rounded
                                     text--100 bg--500
-                                    text- bg--500
-                                    text-black-100 bg-yellow-500
+                                    text-black bg-red-500
+                                    text--100 bg--500
                                     text--100 bg--500
                                     text- bg-
                                     ">
-                                    PUT
+                                    POST
                                 </span>
                                 <span class="text-xs" v-bind:class="docs[21]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[21]['responseOk'] === null">api/user/profile-information</span>
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[21]['responseOk'] === null">_ignition/execute-solution</span>
                                     <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[21]['responseOk'] === true">
-                                        api/user/profile-information -
+                                        _ignition/execute-solution -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[21]['responseCode'] + ', Took:' + docs[21]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                     <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[21]['responseOk'] === false">
-                                        api/user/profile-information -
+                                        _ignition/execute-solution -
                                         <span
                                             class="inline-flex text-xs"
                                             v-text="'Status:'+docs[21]['responseCode'] + ', Took:' + docs[21]['responseTime'] + 'ms'">
@@ -1058,7 +1058,49 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#PUT-api/user/password" @click="highlightSidebar(22)" v-if="!docs[22]['isHidden']">
+                            <a href="#POST-_ignition/update-config" @click="highlightSidebar(22)" v-if="!docs[22]['isHidden']">
+                                <span class="
+                                    font-medium
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    px-2
+                                    py-1
+                                    text-xs
+                                    font-bold
+                                    leading-none
+                                    rounded
+                                    text--100 bg--500
+                                    text-black bg-red-500
+                                    text--100 bg--500
+                                    text--100 bg--500
+                                    text- bg-
+                                    ">
+                                    POST
+                                </span>
+                                <span class="text-xs" v-bind:class="docs[22]['isActiveSidebar'] ? 'font-bold':''">
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[22]['responseOk'] === null">_ignition/update-config</span>
+                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[22]['responseOk'] === true">
+                                        _ignition/update-config -
+                                        <span
+                                            class="inline-flex text-xs"
+                                            v-text="'Status:'+docs[22]['responseCode'] + ', Took:' + docs[22]['responseTime'] + 'ms'">
+                                        </span>
+                                    </span>
+                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[22]['responseOk'] === false">
+                                        _ignition/update-config -
+                                        <span
+                                            class="inline-flex text-xs"
+                                            v-text="'Status:'+docs[22]['responseCode'] + ', Took:' + docs[22]['responseTime'] + 'ms'">
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>
+                            <a href="#PUT-api/user/profile-information" @click="highlightSidebar(23)" v-if="!docs[23]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -1078,20 +1120,20 @@
                                     ">
                                     PUT
                                 </span>
-                                <span class="text-xs" v-bind:class="docs[22]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[22]['responseOk'] === null">api/user/password</span>
-                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[22]['responseOk'] === true">
-                                        api/user/password -
+                                <span class="text-xs" v-bind:class="docs[23]['isActiveSidebar'] ? 'font-bold':''">
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[23]['responseOk'] === null">api/user/profile-information</span>
+                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[23]['responseOk'] === true">
+                                        api/user/profile-information -
                                         <span
                                             class="inline-flex text-xs"
-                                            v-text="'Status:'+docs[22]['responseCode'] + ', Took:' + docs[22]['responseTime'] + 'ms'">
+                                            v-text="'Status:'+docs[23]['responseCode'] + ', Took:' + docs[23]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
-                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[22]['responseOk'] === false">
-                                        api/user/password -
+                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[23]['responseOk'] === false">
+                                        api/user/profile-information -
                                         <span
                                             class="inline-flex text-xs"
-                                            v-text="'Status:'+docs[22]['responseCode'] + ', Took:' + docs[22]['responseTime'] + 'ms'">
+                                            v-text="'Status:'+docs[23]['responseCode'] + ', Took:' + docs[23]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                 </span>
@@ -1100,7 +1142,49 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#DELETE-api/user/two-factor-authentication" @click="highlightSidebar(23)" v-if="!docs[23]['isHidden']">
+                            <a href="#PUT-api/user/password" @click="highlightSidebar(24)" v-if="!docs[24]['isHidden']">
+                                <span class="
+                                    font-medium
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    px-2
+                                    py-1
+                                    text-xs
+                                    font-bold
+                                    leading-none
+                                    rounded
+                                    text--100 bg--500
+                                    text- bg--500
+                                    text-black-100 bg-yellow-500
+                                    text--100 bg--500
+                                    text- bg-
+                                    ">
+                                    PUT
+                                </span>
+                                <span class="text-xs" v-bind:class="docs[24]['isActiveSidebar'] ? 'font-bold':''">
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[24]['responseOk'] === null">api/user/password</span>
+                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[24]['responseOk'] === true">
+                                        api/user/password -
+                                        <span
+                                            class="inline-flex text-xs"
+                                            v-text="'Status:'+docs[24]['responseCode'] + ', Took:' + docs[24]['responseTime'] + 'ms'">
+                                        </span>
+                                    </span>
+                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[24]['responseOk'] === false">
+                                        api/user/password -
+                                        <span
+                                            class="inline-flex text-xs"
+                                            v-text="'Status:'+docs[24]['responseCode'] + ', Took:' + docs[24]['responseTime'] + 'ms'">
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>
+                            <a href="#DELETE-api/user/two-factor-authentication" @click="highlightSidebar(25)" v-if="!docs[25]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -1120,20 +1204,20 @@
                                     ">
                                     DELETE
                                 </span>
-                                <span class="text-xs" v-bind:class="docs[23]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[23]['responseOk'] === null">api/user/two-factor-authentication</span>
-                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[23]['responseOk'] === true">
+                                <span class="text-xs" v-bind:class="docs[25]['isActiveSidebar'] ? 'font-bold':''">
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[25]['responseOk'] === null">api/user/two-factor-authentication</span>
+                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[25]['responseOk'] === true">
                                         api/user/two-factor-authentication -
                                         <span
                                             class="inline-flex text-xs"
-                                            v-text="'Status:'+docs[23]['responseCode'] + ', Took:' + docs[23]['responseTime'] + 'ms'">
+                                            v-text="'Status:'+docs[25]['responseCode'] + ', Took:' + docs[25]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
-                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[23]['responseOk'] === false">
+                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[25]['responseOk'] === false">
                                         api/user/two-factor-authentication -
                                         <span
                                             class="inline-flex text-xs"
-                                            v-text="'Status:'+docs[23]['responseCode'] + ', Took:' + docs[23]['responseTime'] + 'ms'">
+                                            v-text="'Status:'+docs[25]['responseCode'] + ', Took:' + docs[25]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                 </span>
@@ -2999,7 +3083,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[8]['isHidden']">
-                <div class="font-sans" id="POST-api/login">
+                <div class="font-sans" id="GET-api/funds">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -3012,16 +3096,16 @@
                         font-bold
                         leading-none
                         rounded
-                        text--100 bg--500
-                        text-black bg-red-500
+                        text-green-100 bg-green-500
+                        text- bg--500
                         text--100 bg--500
                         text--100 bg--500
                         text- bg-
                         ">
-                        POST
+                        GET
                     </span>
                     <span class="">
-                        <a href="#api/login">api/login</a>
+                        <a href="#api/funds">api/funds</a>
                     </span>
                 </h1>
                 </div>
@@ -3031,21 +3115,21 @@
                     <tbody>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
-                            <td class="align-left pl-2 pr-2 font-bold break-all">POST</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">GET</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/login">{{window.location.origin}}/api/login</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/funds">{{window.location.origin}}/api/funds</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\AuthenticatedSessionController</td>
+                            <td class="align-left pl-2 pr-2 break-all">App\Http\Controllers\FundController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@store</td>
+                            <td class="align-left pl-2 pr-2 break-all">@index</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -3054,56 +3138,6 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
-                                <table class="table-fixed align-left text-sm mt-5">
-                    <thead class="border">
-                    <tr class="border">
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            email
-                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
-                                                                                                                                								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                                                                                                        </div>
-                        </td>
-                    </tr>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            password
-                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
-                                                                                                                                								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                                                                                                        </div>
-                        </td>
-                    </tr>
-                                        </tbody>
-                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[8]['try']"
@@ -3140,14 +3174,6 @@
                             style="padding:15px 0px 15px 0px;min-height:20px;background:#2d2d2d;color: #ccc;resize:both;"
                             v-model="docs[8]['url']" :highlight="highlighter" line-numbers></prism-editor>
                             <br>
-                                                        <h3 class="font-medium">REQUEST BODY<sup class="text-red-500"> *required</sup></h3>
-                            <p class="text-xs pb-2 font-medium text-gray-500">JSON body for the POST|PUT|DELETE request</p>
-                            <prism-editor
-                                class="my-prism-editor"
-                                style="min-height:200px;background:#2d2d2d;color: #ccc;resize:both"
-                                v-model="docs[8]['body']"
-                                :highlight="highlighter"
-                                line-numbers></prism-editor>
                                                     </div>
                     </div>
                     <hr class="border-b border-dotted mt-4 mb-2 border-gray-300">
@@ -3288,7 +3314,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[9]['isHidden']">
-                <div class="font-sans" id="POST-api/logout">
+                <div class="font-sans" id="GET-api/funds/{fund}">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -3301,16 +3327,16 @@
                         font-bold
                         leading-none
                         rounded
-                        text--100 bg--500
-                        text-black bg-red-500
+                        text-green-100 bg-green-500
+                        text- bg--500
                         text--100 bg--500
                         text--100 bg--500
                         text- bg-
                         ">
-                        POST
+                        GET
                     </span>
                     <span class="">
-                        <a href="#api/logout">api/logout</a>
+                        <a href="#api/funds/{fund}">api/funds/{fund}</a>
                     </span>
                 </h1>
                 </div>
@@ -3320,21 +3346,21 @@
                     <tbody>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
-                            <td class="align-left pl-2 pr-2 font-bold break-all">POST</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">GET</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/logout">{{window.location.origin}}/api/logout</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/funds/{fund}">{{window.location.origin}}/api/funds/{fund}</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\AuthenticatedSessionController</td>
+                            <td class="align-left pl-2 pr-2 break-all">App\Http\Controllers\FundController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@destroy</td>
+                            <td class="align-left pl-2 pr-2 break-all">@show</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -3379,14 +3405,6 @@
                             style="padding:15px 0px 15px 0px;min-height:20px;background:#2d2d2d;color: #ccc;resize:both;"
                             v-model="docs[9]['url']" :highlight="highlighter" line-numbers></prism-editor>
                             <br>
-                                                        <h3 class="font-medium">REQUEST BODY<sup class="text-red-500"> *required</sup></h3>
-                            <p class="text-xs pb-2 font-medium text-gray-500">JSON body for the POST|PUT|DELETE request</p>
-                            <prism-editor
-                                class="my-prism-editor"
-                                style="min-height:200px;background:#2d2d2d;color: #ccc;resize:both"
-                                v-model="docs[9]['body']"
-                                :highlight="highlighter"
-                                line-numbers></prism-editor>
                                                     </div>
                     </div>
                     <hr class="border-b border-dotted mt-4 mb-2 border-gray-300">
@@ -3527,7 +3545,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[10]['isHidden']">
-                <div class="font-sans" id="POST-api/forgot-password">
+                <div class="font-sans" id="POST-api/login">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -3549,7 +3567,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/forgot-password">api/forgot-password</a>
+                        <a href="#api/login">api/login</a>
                     </span>
                 </h1>
                 </div>
@@ -3564,12 +3582,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/forgot-password">{{window.location.origin}}/api/forgot-password</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/login">{{window.location.origin}}/api/login</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\PasswordResetLinkController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\AuthenticatedSessionController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -3582,6 +3600,56 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
+                                <table class="table-fixed align-left text-sm mt-5">
+                    <thead class="border">
+                    <tr class="border">
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            email
+                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
+                                                                                                                                								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                                                                                                        </div>
+                        </td>
+                    </tr>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            password
+                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
+                                                                                                                                								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                                                                                                        </div>
+                        </td>
+                    </tr>
+                                        </tbody>
+                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[10]['try']"
@@ -3766,7 +3834,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[11]['isHidden']">
-                <div class="font-sans" id="POST-api/reset-password">
+                <div class="font-sans" id="POST-api/logout">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -3788,7 +3856,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/reset-password">api/reset-password</a>
+                        <a href="#api/logout">api/logout</a>
                     </span>
                 </h1>
                 </div>
@@ -3803,16 +3871,16 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/reset-password">{{window.location.origin}}/api/reset-password</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/logout">{{window.location.origin}}/api/logout</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\NewPasswordController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\AuthenticatedSessionController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@store</td>
+                            <td class="align-left pl-2 pr-2 break-all">@destroy</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -4005,7 +4073,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[12]['isHidden']">
-                <div class="font-sans" id="POST-api/register">
+                <div class="font-sans" id="POST-api/forgot-password">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -4027,7 +4095,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/register">api/register</a>
+                        <a href="#api/forgot-password">api/forgot-password</a>
                     </span>
                 </h1>
                 </div>
@@ -4042,12 +4110,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/register">{{window.location.origin}}/api/register</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/forgot-password">{{window.location.origin}}/api/forgot-password</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\RegisteredUserController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\PasswordResetLinkController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -4244,7 +4312,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[13]['isHidden']">
-                <div class="font-sans" id="POST-api/email/verification-notification">
+                <div class="font-sans" id="POST-api/reset-password">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -4266,7 +4334,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/email/verification-notification">api/email/verification-notification</a>
+                        <a href="#api/reset-password">api/reset-password</a>
                     </span>
                 </h1>
                 </div>
@@ -4281,12 +4349,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/email/verification-notification">{{window.location.origin}}/api/email/verification-notification</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/reset-password">{{window.location.origin}}/api/reset-password</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\NewPasswordController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -4483,7 +4551,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[14]['isHidden']">
-                <div class="font-sans" id="POST-api/user/confirm-password">
+                <div class="font-sans" id="POST-api/register">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -4505,7 +4573,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/user/confirm-password">api/user/confirm-password</a>
+                        <a href="#api/register">api/register</a>
                     </span>
                 </h1>
                 </div>
@@ -4520,12 +4588,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/confirm-password">{{window.location.origin}}/api/user/confirm-password</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/register">{{window.location.origin}}/api/register</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\ConfirmablePasswordController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\RegisteredUserController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -4722,7 +4790,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[15]['isHidden']">
-                <div class="font-sans" id="POST-api/two-factor-challenge">
+                <div class="font-sans" id="POST-api/email/verification-notification">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -4744,7 +4812,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/two-factor-challenge">api/two-factor-challenge</a>
+                        <a href="#api/email/verification-notification">api/email/verification-notification</a>
                     </span>
                 </h1>
                 </div>
@@ -4759,12 +4827,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/two-factor-challenge">{{window.location.origin}}/api/two-factor-challenge</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/email/verification-notification">{{window.location.origin}}/api/email/verification-notification</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -4777,56 +4845,6 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
-                                <table class="table-fixed align-left text-sm mt-5">
-                    <thead class="border">
-                    <tr class="border">
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            code
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
-                                                                                                                                								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none rounded">Nullable</span>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                                                                                                        </div>
-                        </td>
-                    </tr>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            recovery_code
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
-                                                                                                                                								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none rounded">Nullable</span>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                                                                                                        </div>
-                        </td>
-                    </tr>
-                                        </tbody>
-                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[15]['try']"
@@ -5011,7 +5029,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[16]['isHidden']">
-                <div class="font-sans" id="POST-api/user/two-factor-authentication">
+                <div class="font-sans" id="POST-api/user/confirm-password">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -5033,7 +5051,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/user/two-factor-authentication">api/user/two-factor-authentication</a>
+                        <a href="#api/user/confirm-password">api/user/confirm-password</a>
                     </span>
                 </h1>
                 </div>
@@ -5048,12 +5066,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/two-factor-authentication">{{window.location.origin}}/api/user/two-factor-authentication</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/user/confirm-password">{{window.location.origin}}/api/user/confirm-password</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\ConfirmablePasswordController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -5250,7 +5268,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[17]['isHidden']">
-                <div class="font-sans" id="POST-api/user/confirmed-two-factor-authentication">
+                <div class="font-sans" id="POST-api/two-factor-challenge">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -5272,7 +5290,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/user/confirmed-two-factor-authentication">api/user/confirmed-two-factor-authentication</a>
+                        <a href="#api/two-factor-challenge">api/two-factor-challenge</a>
                     </span>
                 </h1>
                 </div>
@@ -5287,12 +5305,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/confirmed-two-factor-authentication">{{window.location.origin}}/api/user/confirmed-two-factor-authentication</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/two-factor-challenge">{{window.location.origin}}/api/two-factor-challenge</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -5305,6 +5323,56 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
+                                <table class="table-fixed align-left text-sm mt-5">
+                    <thead class="border">
+                    <tr class="border">
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            code
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
+                                                                                                                                								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none rounded">Nullable</span>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                                                                                                        </div>
+                        </td>
+                    </tr>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            recovery_code
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-500 rounded">String</span>
+                                                                                                                                								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none rounded">Nullable</span>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                                                                                                        </div>
+                        </td>
+                    </tr>
+                                        </tbody>
+                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[17]['try']"
@@ -5489,7 +5557,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[18]['isHidden']">
-                <div class="font-sans" id="POST-api/user/two-factor-recovery-codes">
+                <div class="font-sans" id="POST-api/user/two-factor-authentication">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -5511,7 +5579,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#api/user/two-factor-recovery-codes">api/user/two-factor-recovery-codes</a>
+                        <a href="#api/user/two-factor-authentication">api/user/two-factor-authentication</a>
                     </span>
                 </h1>
                 </div>
@@ -5526,12 +5594,12 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/two-factor-recovery-codes">{{window.location.origin}}/api/user/two-factor-recovery-codes</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/user/two-factor-authentication">{{window.location.origin}}/api/user/two-factor-authentication</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\RecoveryCodeController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
@@ -5728,7 +5796,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[19]['isHidden']">
-                <div class="font-sans" id="POST-_ignition/execute-solution">
+                <div class="font-sans" id="POST-api/user/confirmed-two-factor-authentication">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -5750,7 +5818,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#_ignition/execute-solution">_ignition/execute-solution</a>
+                        <a href="#api/user/confirmed-two-factor-authentication">api/user/confirmed-two-factor-authentication</a>
                     </span>
                 </h1>
                 </div>
@@ -5765,16 +5833,16 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/_ignition/execute-solution">{{window.location.origin}}/_ignition/execute-solution</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/user/confirmed-two-factor-authentication">{{window.location.origin}}/api/user/confirmed-two-factor-authentication</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Spatie\LaravelIgnition\Http\Controllers\ExecuteSolutionController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@__invoke</td>
+                            <td class="align-left pl-2 pr-2 break-all">@store</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -5783,54 +5851,6 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
-                                <table class="table-fixed align-left text-sm mt-5">
-                    <thead class="border">
-                    <tr class="border">
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            solution
-                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                                                                                            								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                            </div>
-                        </td>
-                    </tr>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            parameters
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-blue-200 rounded">Array</span>
-                                                                                                								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                            </div>
-                        </td>
-                    </tr>
-                                        </tbody>
-                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[19]['try']"
@@ -6015,7 +6035,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[20]['isHidden']">
-                <div class="font-sans" id="POST-_ignition/update-config">
+                <div class="font-sans" id="POST-api/user/two-factor-recovery-codes">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -6037,7 +6057,7 @@
                         POST
                     </span>
                     <span class="">
-                        <a href="#_ignition/update-config">_ignition/update-config</a>
+                        <a href="#api/user/two-factor-recovery-codes">api/user/two-factor-recovery-codes</a>
                     </span>
                 </h1>
                 </div>
@@ -6052,16 +6072,16 @@
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/_ignition/update-config">{{window.location.origin}}/_ignition/update-config</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/user/two-factor-recovery-codes">{{window.location.origin}}/api/user/two-factor-recovery-codes</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Spatie\LaravelIgnition\Http\Controllers\UpdateConfigController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\RecoveryCodeController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@__invoke</td>
+                            <td class="align-left pl-2 pr-2 break-all">@store</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -6070,73 +6090,6 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
-                                <table class="table-fixed align-left text-sm mt-5">
-                    <thead class="border">
-                    <tr class="border">
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
-                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            theme
-                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                                                                                            								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                                                    Illuminate\Validation\Rules\In
-                                                                                                                                                                                    </div>
-                        </td>
-                    </tr>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            editor
-                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                                                                                            								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                            </div>
-                        </td>
-                    </tr>
-                                        <tr class="border">
-                        <td class="border pl-3 pt-1 pb-1 pr-2">3</td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
-                            hide_solutions
-                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
-                                                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2">
-                                                                                                                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-green-400 rounded">Boolean</span>
-                                								                                                    </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
-                                                                                                                </td>
-                        <td class="border pl-3 pr-2 break-all">
-                            <div class="font-mono">
-                                                                                                                                                                                                                                                                                        </div>
-                        </td>
-                    </tr>
-                                        </tbody>
-                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[20]['try']"
@@ -6321,7 +6274,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[21]['isHidden']">
-                <div class="font-sans" id="PUT-api/user/profile-information">
+                <div class="font-sans" id="POST-_ignition/execute-solution">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -6335,15 +6288,15 @@
                         leading-none
                         rounded
                         text--100 bg--500
-                        text- bg--500
-                        text-black-100 bg-yellow-500
+                        text-black bg-red-500
+                        text--100 bg--500
                         text--100 bg--500
                         text- bg-
                         ">
-                        PUT
+                        POST
                     </span>
                     <span class="">
-                        <a href="#api/user/profile-information">api/user/profile-information</a>
+                        <a href="#_ignition/execute-solution">_ignition/execute-solution</a>
                     </span>
                 </h1>
                 </div>
@@ -6353,21 +6306,21 @@
                     <tbody>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
-                            <td class="align-left pl-2 pr-2 font-bold break-all">PUT</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">POST</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/profile-information">{{window.location.origin}}/api/user/profile-information</a>
+                                <a target="_blank" href="{{window.location.origin}}/_ignition/execute-solution">{{window.location.origin}}/_ignition/execute-solution</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\ProfileInformationController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Spatie\LaravelIgnition\Http\Controllers\ExecuteSolutionController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@update</td>
+                            <td class="align-left pl-2 pr-2 break-all">@__invoke</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -6376,6 +6329,54 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
+                                <table class="table-fixed align-left text-sm mt-5">
+                    <thead class="border">
+                    <tr class="border">
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            solution
+                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                                                                                            								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                            </div>
+                        </td>
+                    </tr>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            parameters
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-blue-200 rounded">Array</span>
+                                                                                                								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                            </div>
+                        </td>
+                    </tr>
+                                        </tbody>
+                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[21]['try']"
@@ -6560,7 +6561,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[22]['isHidden']">
-                <div class="font-sans" id="PUT-api/user/password">
+                <div class="font-sans" id="POST-_ignition/update-config">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -6574,15 +6575,15 @@
                         leading-none
                         rounded
                         text--100 bg--500
-                        text- bg--500
-                        text-black-100 bg-yellow-500
+                        text-black bg-red-500
+                        text--100 bg--500
                         text--100 bg--500
                         text- bg-
                         ">
-                        PUT
+                        POST
                     </span>
                     <span class="">
-                        <a href="#api/user/password">api/user/password</a>
+                        <a href="#_ignition/update-config">_ignition/update-config</a>
                     </span>
                 </h1>
                 </div>
@@ -6592,21 +6593,21 @@
                     <tbody>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
-                            <td class="align-left pl-2 pr-2 font-bold break-all">PUT</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">POST</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/password">{{window.location.origin}}/api/user/password</a>
+                                <a target="_blank" href="{{window.location.origin}}/_ignition/update-config">{{window.location.origin}}/_ignition/update-config</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\PasswordController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Spatie\LaravelIgnition\Http\Controllers\UpdateConfigController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@update</td>
+                            <td class="align-left pl-2 pr-2 break-all">@__invoke</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -6615,6 +6616,73 @@
                     <vue-markdown></vue-markdown>
                 </div>
                 <br>
+                                <table class="table-fixed align-left text-sm mt-5">
+                    <thead class="border">
+                    <tr class="border">
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">No.</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Attributes</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Type</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Nullable</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Bail</th>
+                        <th class="border border-gray-300 pl-2 pr-16 pt-1 pb-1 w-min text-left bg-gray-200">Rules</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">1</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            theme
+                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                                                                                            								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                                                    Illuminate\Validation\Rules\In
+                                                                                                                                                                                    </div>
+                        </td>
+                    </tr>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">2</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            editor
+                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                                                                                            								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                            </div>
+                        </td>
+                    </tr>
+                                        <tr class="border">
+                        <td class="border pl-3 pt-1 pb-1 pr-2">3</td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-200">
+                            hide_solutions
+                                                                                            <sup class="text-red-500 font-bold"> *required</sup>
+                                                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2">
+                                                                                                                                                                                                                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-green-400 rounded">Boolean</span>
+                                								                                                    </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 bg-gray-100 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pt-1 pb-1 pr-2 text-center">
+                                                                                                                </td>
+                        <td class="border pl-3 pr-2 break-all">
+                            <div class="font-mono">
+                                                                                                                                                                                                                                                                                        </div>
+                        </td>
+                    </tr>
+                                        </tbody>
+                </table>
                                 <button
                     class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
                     v-if="!docs[22]['try']"
@@ -6799,7 +6867,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[23]['isHidden']">
-                <div class="font-sans" id="DELETE-api/user/two-factor-authentication">
+                <div class="font-sans" id="PUT-api/user/profile-information">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -6814,14 +6882,14 @@
                         rounded
                         text--100 bg--500
                         text- bg--500
+                        text-black-100 bg-yellow-500
                         text--100 bg--500
-                        text--100 bg--500
-                        text-white bg-black
+                        text- bg-
                         ">
-                        DELETE
+                        PUT
                     </span>
                     <span class="">
-                        <a href="#api/user/two-factor-authentication">api/user/two-factor-authentication</a>
+                        <a href="#api/user/profile-information">api/user/profile-information</a>
                     </span>
                 </h1>
                 </div>
@@ -6831,21 +6899,21 @@
                     <tbody>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
-                            <td class="align-left pl-2 pr-2 font-bold break-all">DELETE</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">PUT</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/user/two-factor-authentication">{{window.location.origin}}/api/user/two-factor-authentication</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/user/profile-information">{{window.location.origin}}/api/user/profile-information</a>
                             </td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
-                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\ProfileInformationController</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@destroy</td>
+                            <td class="align-left pl-2 pr-2 break-all">@update</td>
                         </tr>
                                             </tbody>
                 </table>
@@ -7037,6 +7105,484 @@
                     </div>
                   </div>
             </section>
+                        <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[24]['isHidden']">
+                <div class="font-sans" id="PUT-api/user/password">
+                <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
+                    <span class="w-20
+                        font-medium
+                        inline-flex
+                        items-center
+                        justify-center
+                        px-2
+                        py-1
+                        text-xs
+                        font-bold
+                        leading-none
+                        rounded
+                        text--100 bg--500
+                        text- bg--500
+                        text-black-100 bg-yellow-500
+                        text--100 bg--500
+                        text- bg-
+                        ">
+                        PUT
+                    </span>
+                    <span class="">
+                        <a href="#api/user/password">api/user/password</a>
+                    </span>
+                </h1>
+                </div>
+                <hr class="border-b border-grey-light">
+
+                <table class="table-fixed text-sm mt-5">
+                    <tbody>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">PUT</td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
+                            <td class="align-left pl-2 pr-2 break-all">
+                                <a target="_blank" href="{{window.location.origin}}/api/user/password">{{window.location.origin}}/api/user/password</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\PasswordController</td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
+                            <td class="align-left pl-2 pr-2 break-all">@update</td>
+                        </tr>
+                                            </tbody>
+                </table>
+                <div v-if="docs[24]['docBlock']" class="border-2 mr-4 mt-4 p-4 rounded text-sm">
+                    <h3 class="font-bold">LRD Docs</h3>
+                    <vue-markdown></vue-markdown>
+                </div>
+                <br>
+                                <button
+                    class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
+                    v-if="!docs[24]['try']"
+                    v-on:click="docs[24]['try'] = !docs[24]['try'];docs[24]['cancel'] = !docs[24]['cancel']"
+                >
+                    Try
+                </button>
+
+                <button
+                    class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
+                    v-if="!docs[24]['cancel']"
+                    v-on:click="docs[24]['cancel'] = !docs[24]['cancel'];docs[24]['try'] = !docs[24]['try'];"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    v-if="docs[24]['try']"
+                    @click="request(docs[24])"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 border-blue-800 border-2 shadow-inner mb-1 pl-5 pr-5 rounded-full"
+                >
+                    <svg
+                        v-if="docs[24]['loading']"
+                        class="animate-spin h-4 w-4 rounded-full bg-transparent border-2 border-transparent border-opacity-50 inline pr-2" style="border-right-color: white; border-top-color: white;" viewBox="0 0 24 24"></svg>
+                    Run
+                </button>
+
+                <div class="grid grid-cols-1 mt-3 pr-2 overflow-auto">
+                    <div class="">
+                        <div v-if="docs[24]['try']">
+                            <h3 class="font-medium">REQUEST URL<sup class="text-red-500 font-bold"> *required</sup></h3>
+                            <p class="text-xs pb-2 font-medium text-gray-500">Enter your request URL with query params</p>
+                            <prism-editor class="my-prism-editor"
+                            style="padding:15px 0px 15px 0px;min-height:20px;background:#2d2d2d;color: #ccc;resize:both;"
+                            v-model="docs[24]['url']" :highlight="highlighter" line-numbers></prism-editor>
+                            <br>
+                                                        <h3 class="font-medium">REQUEST BODY<sup class="text-red-500"> *required</sup></h3>
+                            <p class="text-xs pb-2 font-medium text-gray-500">JSON body for the POST|PUT|DELETE request</p>
+                            <prism-editor
+                                class="my-prism-editor"
+                                style="min-height:200px;background:#2d2d2d;color: #ccc;resize:both"
+                                v-model="docs[24]['body']"
+                                :highlight="highlighter"
+                                line-numbers></prism-editor>
+                                                    </div>
+                    </div>
+                    <hr class="border-b border-dotted mt-4 mb-2 border-gray-300">
+                    <div class="grid grid-cols-2 gap-2" v-if="docs[24]['response'] && !docs[24]['cancel']">
+                        <div class="border-r-2">
+                            <h3 class="font-medium">
+                                RESPONSE
+                                <p class="text-xs pt-2 pb-2 font-medium text-gray-500">
+                                    Response status, code and time.
+                                </p>
+                            </h3>
+                            <table class="table-fixed text-sm mt-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Status</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                            v-if="docs[24]['responseOk']"
+                                            class="inline-flex  text-xs font-bold leading-none text-green-700">
+                                                SUCCESS
+                                            </span>
+                                            <span
+                                                v-if="!docs[24]['responseOk']"
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-500 rounded">
+                                                ERROR
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Status Code</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[24]['responseOk']"
+                                                class="inline-flex text-xs font-bold text-green-900"
+                                                v-text="docs[24]['responseCode']">
+                                            </span>
+                                            <span
+                                                v-if="!docs[24]['responseOk']"
+                                                class="inline-flex text-xs font-bold text-red-900"
+                                                v-text="docs[24]['responseCode']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Memory Usage</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[24]['memory']"
+                                                class="inline-flex text-xs font-bold text-red-900"
+                                                v-text="docs[24]['memory']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Response Time</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[24]['responseTime']"
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-400 rounded"
+                                                v-text="docs[24]['responseTime'] + 'ms'">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-xs pt-2 pb-2 font-medium text-gray-500">
+                                Response headers.
+                            </p>
+                            <prism-editor
+                                v-if="docs[24]['responseHeaders']"
+                                class="my-prism-editor shadow-inner border-gray-400 border-2 rounded"
+                                style="width:75%;min-height:100px;height:200px;background:#fefefe;color: rgb(66, 63, 63);resize:both"
+                                readonly
+                                v-model="docs[24]['responseHeaders']"
+                                :highlight="highlighterAtom"
+                                line-numbers></prism-editor>
+                        </div>
+                        <div>
+                            <p class="text-xs pb-2 font-medium text-gray-800">Response from the server</p>
+                            <prism-editor
+                                v-if="docs[24]['response']"
+                                class="my-prism-editor shadow-inner border-gray-400 border-2 rounded"
+                                style="min-height:100px;height:300px;background:#2d2d2d;color: #ccc;resize:both"
+                                readonly
+                                v-model="docs[24]['response']"
+                                :highlight="highlighter"
+                                line-numbers></prism-editor>
+                        </div>
+                        <div class="border-r-2">
+                            <h3 class="font-medium mt-10">
+                                SQL
+                            </h3>
+                            <p v-if="!docs[24]['queries'].length" class="text-xs pb-2 font-medium text-gray-500">
+                                No SQL queries executed for this request.
+                            </p>
+                            <p v-if="docs[24]['queries'].length" class="text-xs pb-2 font-medium text-gray-500">
+                                SQL queries executed for this request.
+                                <table class="table-fixed text-sm mt-5">
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Total Queries</td>
+                                            <td class="align-left pl-2 pr-2 break-all">
+                                                <div v-text="docs[24]['queries'].length"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Total Query time</td>
+                                            <td class="align-left pl-2 pr-2 break-all">
+                                                <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-400 rounded">
+                                                    <span v-text="docs[24]['queries'].reduce((total, query) => total + query.time, 0).toFixed(2)"></span>ms
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
+                        <div class="">
+                                <p class="text-xs mt-10 font-medium text-gray-500">
+                                    SQL queries
+                                </p>
+                                <div v-for="(query, index) in docs[24]['queries']">
+                                    <p class="mt-2 text-sm font-medium">{{index+1}}.
+                                        <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-500 rounded mb-1">
+                                            {{query.time}}ms
+                                        </span>
+                                    </p>
+                                    <prism-editor
+                                        v-model="sqlFormatter.format(query['sql'])"
+                                        class="my-prism-editor"
+                                        style="padding:10px 0px 10px 0px;min-height:20px;height:350px;background:rgb(52 33 33);color: #ccc;resize:both;"
+                                        readonly
+                                        :highlight="highlighter"
+                                        line-numbers></prism-editor>
+                                </div>
+                        </div>
+                    </div>
+                  </div>
+            </section>
+                        <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[25]['isHidden']">
+                <div class="font-sans" id="DELETE-api/user/two-factor-authentication">
+                <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
+                    <span class="w-20
+                        font-medium
+                        inline-flex
+                        items-center
+                        justify-center
+                        px-2
+                        py-1
+                        text-xs
+                        font-bold
+                        leading-none
+                        rounded
+                        text--100 bg--500
+                        text- bg--500
+                        text--100 bg--500
+                        text--100 bg--500
+                        text-white bg-black
+                        ">
+                        DELETE
+                    </span>
+                    <span class="">
+                        <a href="#api/user/two-factor-authentication">api/user/two-factor-authentication</a>
+                    </span>
+                </h1>
+                </div>
+                <hr class="border-b border-grey-light">
+
+                <table class="table-fixed text-sm mt-5">
+                    <tbody>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">DELETE</td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
+                            <td class="align-left pl-2 pr-2 break-all">
+                                <a target="_blank" href="{{window.location.origin}}/api/user/two-factor-authentication">{{window.location.origin}}/api/user/two-factor-authentication</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
+                            <td class="align-left pl-2 pr-2 break-all">Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController</td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
+                            <td class="align-left pl-2 pr-2 break-all">@destroy</td>
+                        </tr>
+                                            </tbody>
+                </table>
+                <div v-if="docs[25]['docBlock']" class="border-2 mr-4 mt-4 p-4 rounded text-sm">
+                    <h3 class="font-bold">LRD Docs</h3>
+                    <vue-markdown></vue-markdown>
+                </div>
+                <br>
+                                <button
+                    class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
+                    v-if="!docs[25]['try']"
+                    v-on:click="docs[25]['try'] = !docs[25]['try'];docs[25]['cancel'] = !docs[25]['cancel']"
+                >
+                    Try
+                </button>
+
+                <button
+                    class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
+                    v-if="!docs[25]['cancel']"
+                    v-on:click="docs[25]['cancel'] = !docs[25]['cancel'];docs[25]['try'] = !docs[25]['try'];"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    v-if="docs[25]['try']"
+                    @click="request(docs[25])"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 border-blue-800 border-2 shadow-inner mb-1 pl-5 pr-5 rounded-full"
+                >
+                    <svg
+                        v-if="docs[25]['loading']"
+                        class="animate-spin h-4 w-4 rounded-full bg-transparent border-2 border-transparent border-opacity-50 inline pr-2" style="border-right-color: white; border-top-color: white;" viewBox="0 0 24 24"></svg>
+                    Run
+                </button>
+
+                <div class="grid grid-cols-1 mt-3 pr-2 overflow-auto">
+                    <div class="">
+                        <div v-if="docs[25]['try']">
+                            <h3 class="font-medium">REQUEST URL<sup class="text-red-500 font-bold"> *required</sup></h3>
+                            <p class="text-xs pb-2 font-medium text-gray-500">Enter your request URL with query params</p>
+                            <prism-editor class="my-prism-editor"
+                            style="padding:15px 0px 15px 0px;min-height:20px;background:#2d2d2d;color: #ccc;resize:both;"
+                            v-model="docs[25]['url']" :highlight="highlighter" line-numbers></prism-editor>
+                            <br>
+                                                        <h3 class="font-medium">REQUEST BODY<sup class="text-red-500"> *required</sup></h3>
+                            <p class="text-xs pb-2 font-medium text-gray-500">JSON body for the POST|PUT|DELETE request</p>
+                            <prism-editor
+                                class="my-prism-editor"
+                                style="min-height:200px;background:#2d2d2d;color: #ccc;resize:both"
+                                v-model="docs[25]['body']"
+                                :highlight="highlighter"
+                                line-numbers></prism-editor>
+                                                    </div>
+                    </div>
+                    <hr class="border-b border-dotted mt-4 mb-2 border-gray-300">
+                    <div class="grid grid-cols-2 gap-2" v-if="docs[25]['response'] && !docs[25]['cancel']">
+                        <div class="border-r-2">
+                            <h3 class="font-medium">
+                                RESPONSE
+                                <p class="text-xs pt-2 pb-2 font-medium text-gray-500">
+                                    Response status, code and time.
+                                </p>
+                            </h3>
+                            <table class="table-fixed text-sm mt-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Status</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                            v-if="docs[25]['responseOk']"
+                                            class="inline-flex  text-xs font-bold leading-none text-green-700">
+                                                SUCCESS
+                                            </span>
+                                            <span
+                                                v-if="!docs[25]['responseOk']"
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-500 rounded">
+                                                ERROR
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Status Code</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[25]['responseOk']"
+                                                class="inline-flex text-xs font-bold text-green-900"
+                                                v-text="docs[25]['responseCode']">
+                                            </span>
+                                            <span
+                                                v-if="!docs[25]['responseOk']"
+                                                class="inline-flex text-xs font-bold text-red-900"
+                                                v-text="docs[25]['responseCode']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Memory Usage</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[25]['memory']"
+                                                class="inline-flex text-xs font-bold text-red-900"
+                                                v-text="docs[25]['memory']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Response Time</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[25]['responseTime']"
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-400 rounded"
+                                                v-text="docs[25]['responseTime'] + 'ms'">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-xs pt-2 pb-2 font-medium text-gray-500">
+                                Response headers.
+                            </p>
+                            <prism-editor
+                                v-if="docs[25]['responseHeaders']"
+                                class="my-prism-editor shadow-inner border-gray-400 border-2 rounded"
+                                style="width:75%;min-height:100px;height:200px;background:#fefefe;color: rgb(66, 63, 63);resize:both"
+                                readonly
+                                v-model="docs[25]['responseHeaders']"
+                                :highlight="highlighterAtom"
+                                line-numbers></prism-editor>
+                        </div>
+                        <div>
+                            <p class="text-xs pb-2 font-medium text-gray-800">Response from the server</p>
+                            <prism-editor
+                                v-if="docs[25]['response']"
+                                class="my-prism-editor shadow-inner border-gray-400 border-2 rounded"
+                                style="min-height:100px;height:300px;background:#2d2d2d;color: #ccc;resize:both"
+                                readonly
+                                v-model="docs[25]['response']"
+                                :highlight="highlighter"
+                                line-numbers></prism-editor>
+                        </div>
+                        <div class="border-r-2">
+                            <h3 class="font-medium mt-10">
+                                SQL
+                            </h3>
+                            <p v-if="!docs[25]['queries'].length" class="text-xs pb-2 font-medium text-gray-500">
+                                No SQL queries executed for this request.
+                            </p>
+                            <p v-if="docs[25]['queries'].length" class="text-xs pb-2 font-medium text-gray-500">
+                                SQL queries executed for this request.
+                                <table class="table-fixed text-sm mt-5">
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Total Queries</td>
+                                            <td class="align-left pl-2 pr-2 break-all">
+                                                <div v-text="docs[25]['queries'].length"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Total Query time</td>
+                                            <td class="align-left pl-2 pr-2 break-all">
+                                                <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-400 rounded">
+                                                    <span v-text="docs[25]['queries'].reduce((total, query) => total + query.time, 0).toFixed(2)"></span>ms
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
+                        <div class="">
+                                <p class="text-xs mt-10 font-medium text-gray-500">
+                                    SQL queries
+                                </p>
+                                <div v-for="(query, index) in docs[25]['queries']">
+                                    <p class="mt-2 text-sm font-medium">{{index+1}}.
+                                        <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-500 rounded mb-1">
+                                            {{query.time}}ms
+                                        </span>
+                                    </p>
+                                    <prism-editor
+                                        v-model="sqlFormatter.format(query['sql'])"
+                                        class="my-prism-editor"
+                                        style="padding:10px 0px 10px 0px;min-height:20px;height:350px;background:rgb(52 33 33);color: #ccc;resize:both;"
+                                        readonly
+                                        :highlight="highlighter"
+                                        line-numbers></prism-editor>
+                                </div>
+                        </div>
+                    </div>
+                  </div>
+            </section>
                      </div>
       </div>
       <script>
@@ -7096,7 +7642,7 @@
 
             return validations
         }
-        var docs = [{"uri":"api\/email\/verify\/{id}\/{hash}","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\VerifyEmailController","method":"__invoke","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/confirmed-password-status","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ConfirmedPasswordStatusController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-qr-code","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorQrCodeController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-secret-key","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorSecretKeyController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-recovery-codes","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\RecoveryCodeController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/csrf-cookie","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"_ignition\/health-check","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Spatie\\LaravelIgnition\\Http\\Controllers\\HealthCheckController","method":"__invoke","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/me","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"App\\Http\\Controllers\\UserController","method":"getUserInfo","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/login","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\AuthenticatedSessionController","method":"store","httpMethod":"POST","rules":{"email":["required|string"],"password":["required|string"]},"docBlock":""},{"uri":"api\/logout","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\AuthenticatedSessionController","method":"destroy","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/forgot-password","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\PasswordResetLinkController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/reset-password","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\NewPasswordController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/register","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\RegisteredUserController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/email\/verification-notification","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\EmailVerificationNotificationController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/user\/confirm-password","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ConfirmablePasswordController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/two-factor-challenge","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorAuthenticatedSessionController","method":"store","httpMethod":"POST","rules":{"code":["nullable|string"],"recovery_code":["nullable|string"]},"docBlock":""},{"uri":"api\/user\/two-factor-authentication","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorAuthenticationController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/user\/confirmed-two-factor-authentication","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ConfirmedTwoFactorAuthenticationController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-recovery-codes","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\RecoveryCodeController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"_ignition\/execute-solution","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Spatie\\LaravelIgnition\\Http\\Controllers\\ExecuteSolutionController","method":"__invoke","httpMethod":"POST","rules":{"solution":["required"],"parameters":["array"]},"docBlock":""},{"uri":"_ignition\/update-config","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Spatie\\LaravelIgnition\\Http\\Controllers\\UpdateConfigController","method":"__invoke","httpMethod":"POST","rules":{"theme":["required|Illuminate\\Validation\\Rules\\In"],"editor":["required"],"hide_solutions":["required|boolean"]},"docBlock":""},{"uri":"api\/user\/profile-information","methods":["PUT"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ProfileInformationController","method":"update","httpMethod":"PUT","rules":[],"docBlock":""},{"uri":"api\/user\/password","methods":["PUT"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\PasswordController","method":"update","httpMethod":"PUT","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-authentication","methods":["DELETE"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorAuthenticationController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""}];
+        var docs = [{"uri":"api\/email\/verify\/{id}\/{hash}","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\VerifyEmailController","method":"__invoke","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/confirmed-password-status","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ConfirmedPasswordStatusController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-qr-code","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorQrCodeController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-secret-key","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorSecretKeyController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-recovery-codes","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\RecoveryCodeController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/csrf-cookie","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"_ignition\/health-check","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"Spatie\\LaravelIgnition\\Http\\Controllers\\HealthCheckController","method":"__invoke","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/me","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"App\\Http\\Controllers\\UserController","method":"getUserInfo","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/funds","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"App\\Http\\Controllers\\FundController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/funds\/{fund}","methods":["GET","HEAD"],"middlewares":[],"controller":"","controller_full_path":"App\\Http\\Controllers\\FundController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/login","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\AuthenticatedSessionController","method":"store","httpMethod":"POST","rules":{"email":["required|string"],"password":["required|string"]},"docBlock":""},{"uri":"api\/logout","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\AuthenticatedSessionController","method":"destroy","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/forgot-password","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\PasswordResetLinkController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/reset-password","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\NewPasswordController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/register","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\RegisteredUserController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/email\/verification-notification","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\EmailVerificationNotificationController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/user\/confirm-password","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ConfirmablePasswordController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/two-factor-challenge","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorAuthenticatedSessionController","method":"store","httpMethod":"POST","rules":{"code":["nullable|string"],"recovery_code":["nullable|string"]},"docBlock":""},{"uri":"api\/user\/two-factor-authentication","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorAuthenticationController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/user\/confirmed-two-factor-authentication","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ConfirmedTwoFactorAuthenticationController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-recovery-codes","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\RecoveryCodeController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"_ignition\/execute-solution","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Spatie\\LaravelIgnition\\Http\\Controllers\\ExecuteSolutionController","method":"__invoke","httpMethod":"POST","rules":{"solution":["required"],"parameters":["array"]},"docBlock":""},{"uri":"_ignition\/update-config","methods":["POST"],"middlewares":[],"controller":"","controller_full_path":"Spatie\\LaravelIgnition\\Http\\Controllers\\UpdateConfigController","method":"__invoke","httpMethod":"POST","rules":{"theme":["required|Illuminate\\Validation\\Rules\\In"],"editor":["required"],"hide_solutions":["required|boolean"]},"docBlock":""},{"uri":"api\/user\/profile-information","methods":["PUT"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\ProfileInformationController","method":"update","httpMethod":"PUT","rules":[],"docBlock":""},{"uri":"api\/user\/password","methods":["PUT"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\PasswordController","method":"update","httpMethod":"PUT","rules":[],"docBlock":""},{"uri":"api\/user\/two-factor-authentication","methods":["DELETE"],"middlewares":[],"controller":"","controller_full_path":"Laravel\\Fortify\\Http\\Controllers\\TwoFactorAuthenticationController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""}];
         var app_url = "http:\/\/localhost:8000";
 
         //remove trailing slash if any
