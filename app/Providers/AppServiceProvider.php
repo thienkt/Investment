@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         ResetPassword::createUrlUsing(function ($notifiable, $token) {
-            return env('SPA_URL') . "/reset-password/{$token}?email={$notifiable->getEmailForPasswordReset()}";
+            return env('SPA_URL') . "/reset-password?token={$token}&email={$notifiable->getEmailForPasswordReset()}";
         });
     }
 }
