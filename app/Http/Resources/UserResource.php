@@ -14,7 +14,7 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return removeNullish([
+        return [
             'name' => $this->name,
             'email' => $this->email,
             'address' => $this->address,
@@ -27,6 +27,6 @@ class UserResource extends JsonResource
             'portrait' => $this->portrait,
             'identity_image_front' => $this->identity_image_front,
             'identity_image_back' => $this->identity_image_back,
-        ]);
+        ];
     }
 }
