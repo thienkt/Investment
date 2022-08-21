@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FundCredential extends Model
+class Credential extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,7 @@ class FundCredential extends Model
      */
     protected $fillable = [
         'id',
+        'key',
         'token'
     ];
 

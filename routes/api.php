@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(
     function () {
         Route::get('/me', [UserController::class, 'getUserInfo'])->name('user.info');
+        Route::get('/funds/history/{id}', [FundController::class, 'getHistory'])->where('id', '[0-9]+')->name('funds.history');
         Route::apiResource('funds', FundController::class)->only(['index', 'show']);
     }
 );

@@ -27,7 +27,7 @@ class ResponseFactory
                 json_encode([
                     'data' => $isSuccess ? $data : (object)[],
                     'errors' =>  $data['errors'] ?? (object)[],
-                    'message' => $data['message'] ?? HttpFoundationResponse::$statusTexts[$status],
+                    'message' => empty($data['message']) ? HttpFoundationResponse::$statusTexts[$status]: $data['message'],
                     'status' => $status,
                 ]),
             );

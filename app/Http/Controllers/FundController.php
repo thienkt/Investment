@@ -73,4 +73,9 @@ class FundController extends Controller
     {
         return $this->fund->destroy($id);
     }
+
+    public function getHistory($id)
+    {
+        return $this->fund->getHistory($id);
+    }
 }

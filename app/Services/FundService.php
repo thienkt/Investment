@@ -4,17 +4,19 @@ namespace App\Services;
 
 use App\Http\Resources\FundCollection;
 use App\Http\Resources\FundResource;
+use App\Models\Fund;
 use App\Repositories\FundRepository;
-use Database\Seeders\FundSeeder;
 use Exception;
 
 class FundService extends BaseService
 {
     protected $fund;
+    protected $vendor;
 
-    public function __construct(FundRepository $fund)
+    public function __construct(FundRepository $fund, VendorService $vendor)
     {
         $this->fund = $fund;
+        $this->vendor = $vendor;
     }
 
     public function index()
@@ -55,5 +57,21 @@ class FundService extends BaseService
     {
         $fund = $this->fund->destroy($id);
         return $fund;
+    }
+
+    public function getHistory($id)
+    {
+        try {
+            $fund = $this->fund->show($id);
+            $credential = $fund->credential;
+            $token = $this->vendor->getCredential($credential->id);
+            $history = $this->vendor->get($fund->historical_data_url, [
+                'headers' => ['Authorization' => 'Bearer ' . $token],
+            ]);
+
+            return $this->ok($history->value);
+        } catch (Exception $e) {
+            return $this->error($e);
+        }
     }
 }

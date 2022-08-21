@@ -24,7 +24,7 @@ class Fund extends Model
 
     public function credential()
     {
-        return $this->belongsTo(FundCredential::class);
+        return $this->belongsTo(Credential::class);
     }
 
     public function packages()

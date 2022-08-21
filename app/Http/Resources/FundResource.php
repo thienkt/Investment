@@ -17,8 +17,7 @@ class FundResource extends JsonResource
         return [
             'code' => $this->code,
             'name' => $this->name,
-            'description' => $this->description,
-            'historical_data_url' => $this->historical_data_url,
+            'description' => $this->description
         ];
     }
 }
