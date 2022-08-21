@@ -13,7 +13,7 @@ class RegisterResponse implements RegisterResponseContract
     public function toResponse($request): Response
     {
         return $request->wantsJson()
-            ? new JsonResponse(auth()->user(), 201)
+            ? new JsonResponse(new UserResource(auth()->user()), 201)
             : redirect(url(env('SPA_URL')));
     }
 }

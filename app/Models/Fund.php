@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fund extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +29,6 @@ class Fund extends Model
 
     public function packages()
     {
-       return $this->belongsToMany(Package::class);
+        return $this->belongsToMany(Package::class);
     }
 }
