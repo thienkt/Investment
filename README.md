@@ -31,6 +31,10 @@ docker exec -it tikop_app sh
 > ```bash
 > php artisan migrate
 > ```
+> ### Seeding
+> ```bash
+> php artisan db:seed
+> ```
 > ### [Laravel Request Docs](https://github.com/rakutentech/laravel-request-docs)
 > Generate a static HTML and open api specification
 > ```bash
