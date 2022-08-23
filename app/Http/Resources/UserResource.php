@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class UserResource extends JsonResource
 {
@@ -24,6 +25,7 @@ class UserResource extends JsonResource
             'avatar' => $this->avatar,
             'phone_number' => $this->phone_number,
             'is_verify' => $this->is_verify,
+            'is_activated' => (bool)$this->email_verified_at,
             'portrait' => $this->portrait,
             'identity_image_front' => $this->identity_image_front,
             'identity_image_back' => $this->identity_image_back,

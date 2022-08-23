@@ -17,12 +17,11 @@ class Package extends Model
      */
     protected $fillable = [
         'name',
-        'investment_amount'
     ];
 
     public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class)->withPivot('investment_amount');
     }
 
     public function funds()
