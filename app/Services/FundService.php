@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Resources\FundCollection;
 use App\Http\Resources\FundResource;
-use App\Models\Fund;
 use App\Repositories\FundRepository;
 use Exception;
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('owner_id')->nullable(false);
             $table->bigInteger('package_id')->nullable(false);
-            $table->string('avatar')->nullable()->default('https://i.pinimg.com/564x/2e/72/23/2e7223b134b2f18ce199354576c602c8.jpg');
+            $table->string('avatar')->nullable()->default(Config('package.default_avatar'));
             $table->decimal('investment_amount', 15, 3, true)->nullable()->default(0);
             $table->foreign('owner_id')->references('id')->on('users');
             $table->foreign('package_id')->references('id')->on('packages');

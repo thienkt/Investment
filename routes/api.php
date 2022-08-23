@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FundController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +21,9 @@ Route::middleware('auth:sanctum')->group(
         Route::get('/me', [UserController::class, 'getUserInfo'])->name('user.info');
         Route::get('/funds/history/{id}', [FundController::class, 'getHistory'])->where('id', '[0-9]+')->name('funds.history');
         Route::apiResource('funds', FundController::class)->only(['index', 'show']);
+        Route::prefix('packages')->group(function () {
+            Route::get('/default', [PackageController::class, 'getDefaultPackages'])->name('packages.default');
+            Route::get('/customization', [PackageController::class, 'getCustomizedPackages'])->name('packages.customization');
+        });
     }
 );

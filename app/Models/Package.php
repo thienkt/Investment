@@ -28,4 +28,15 @@ class Package extends Model
     {
         return $this->belongsToMany(Fund::class)->withPivot('allocation_percentage');
     }
+
+    /**
+     * Scope a query to only include default packages.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDefault($query)
+    {
+        return $query->where('is_default', '=', 1);
+    }
 }
