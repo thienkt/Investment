@@ -7,8 +7,10 @@
     "require": {
         "php": "^8.0.2",
         "doctrine/dbal": "^3.3",
+        "google/cloud-storage": "^1.28",
         "guzzlehttp/guzzle": "^7.4",
         "kevinrob/guzzle-cache-middleware": "^4.0",
+        "kreait/firebase-php": "^6.8",
         "laravel/fortify": "^1.13",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.15",
