@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePackageAvatarRequest;
+use App\Http\Requests\CreatePackageRequest;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
     protected $package;
+
     /**
      * Create a new controller instance.
      *
@@ -28,7 +31,7 @@ class PackageController extends Controller
         return $this->package->getDefaultPackages();
     }
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -37,14 +40,15 @@ class PackageController extends Controller
     {
         return $this->package->getCustomizedPackages();
     }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function clone(CreatePackageRequest $request, $id)
     {
-        //
+        // TODO
     }
 
     /**
@@ -53,9 +57,9 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(CreatePackageRequest $request)
     {
-        //
+        return $this->package->create($request);
     }
 
     /**
@@ -69,15 +73,9 @@ class PackageController extends Controller
         return $this->package->show($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function changeAvatar(ChangePackageAvatarRequest $request)
     {
-        //
+        return $this->package->changeAvatar($request->id, $request->avatar);
     }
 
     /**

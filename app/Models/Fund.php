@@ -10,6 +10,7 @@ class Fund extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $timestamps = true;
     /**
      * The attributes that are mass assignable.
      *

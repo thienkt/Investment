@@ -15,9 +15,10 @@ class PackageResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'avatar' => $this->avatar ?? Config('package.default_avatar'),
             'investment_amount' => $this->investment_amount ?? 0,
-            'is_default' => $this->is_default,
+            'is_default' => $this->is_default ?? false,
             'name' => $this->name,
         ];
     }

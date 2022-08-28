@@ -10,7 +10,8 @@ class Package extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
+    public $timestamps = true;
+/**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -19,14 +20,14 @@ class Package extends Model
         'name',
     ];
 
-    public function owner()
+    public function owners()
     {
-        return $this->belongsToMany(User::class)->withPivot('investment_amount');
+        return $this->belongsToMany(User::class, 'user_package')->withPivot('investment_amount');
     }
 
     public function funds()
     {
-        return $this->belongsToMany(Fund::class)->withPivot('allocation_percentage');
+        return $this->belongsToMany(Fund::class, 'package_fund')->withPivot('allocation_percentage');
     }
 
     /**

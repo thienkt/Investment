@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FundController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,11 @@ Route::middleware('auth:sanctum')->group(
         Route::prefix('packages')->group(function () {
             Route::get('/default', [PackageController::class, 'getDefaultPackages'])->name('packages.default');
             Route::get('/customization', [PackageController::class, 'getCustomizedPackages'])->name('packages.customization');
+            Route::post('/create', [PackageController::class, 'create'])->name('packages.create');
+            Route::post('/clone/{id}', [PackageController::class, 'clone'])->name('packages.clone');
+            Route::post('/change-avatar/{id}', [PackageController::class, 'changeAvatar'])->name('packages.change_avatar');
         });
     }
 );
+
+Route::get('/assets/{uid}/{name}',  [ImageController::class, 'getImage'])->name('packages.asset');

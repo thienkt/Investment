@@ -10,18 +10,21 @@ class PackageRepository
 
     public function __construct(Package $package)
     {
-        $this->Package = $package;
+        $this->package = $package;
     }
 
     public function index()
     {
-        $packages = $this->Package::all();
+        $packages = $this->package::all();
         return $packages;
     }
 
+    /**
+     * @return Package
+     */
     public function store($data)
     {
-        $package = $this->Package::create($data);
+        $package = $this->package::create($data);
         return $package;
     }
 
@@ -33,7 +36,7 @@ class PackageRepository
 
     public function update($data, $id)
     {
-        $package = $this->Package::findOrFail($id);
+        $package = $this->package::findOrFail($id);
         $package->fill($data);
         $package->save();
         return $package;
@@ -41,7 +44,7 @@ class PackageRepository
 
     public function destroy($id)
     {
-        $package = $this->Package::findOrFail($id);
+        $package = $this->package::findOrFail($id);
         $package->delete();
         return $package;
     }
