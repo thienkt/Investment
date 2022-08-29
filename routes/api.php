@@ -20,9 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(
     function () {
         Route::get('/me', [UserController::class, 'getUserInfo'])->name('user.info');
+        Route::post('/me/change-avatar', [UserController::class, 'changeAvatar'])->name('user.info');
         Route::get('/settings', [UserController::class, 'getUserStatus'])->name('user.status');
+        Route::prefix('kyc-verification')->group(function () {
+            // Route::post('/portrait', [UserController::class, ''])->name('user.portrait');
+            // Route::post('/identity_image_front', [UserController::class, ''])->name('user.identity_image_front');
+            // Route::post('/identity_image_back', [UserController::class, ''])->name('user.identity_image_back');
+        });
+
         Route::get('/funds/history/{id}', [FundController::class, 'getHistory'])->where('id', '[0-9]+')->name('funds.history');
         Route::apiResource('funds', FundController::class)->only(['index', 'show']);
+
         Route::prefix('packages')->group(function () {
             Route::get('/default', [PackageController::class, 'getDefaultPackages'])->name('packages.default');
             Route::get('/customization', [PackageController::class, 'getCustomizedPackages'])->name('packages.customization');
