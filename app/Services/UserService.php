@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class UserService extends BaseService
         try {
             $filePath = Config('app.asset_url') . $this->store->upload($image);
             Auth::user()->avatar = $filePath;
-            Auth::user()->save();
+            User::find(Auth::id())->save();
 
             return $this->ok('Success');
         } catch (Exception $e) {
