@@ -14,10 +14,8 @@ class UserStatusResource extends JsonResource
      */
     public function toArray($request)
     {
-        $twoFA = isset($this->two_factor_recovery_codes) && isset($this->two_factor_secret);
-
         return [
-            'enabled_2fa' => $twoFA,
+            'enabled_2fa' => (bool) $this->two_factor_confirmed_at,
             'verified_email' => (bool) $this->email_verified_at,
             'verified_ekyc' => $this->is_verify,
         ];
