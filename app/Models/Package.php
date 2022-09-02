@@ -22,7 +22,7 @@ class Package extends Model
 
     public function owners()
     {
-        return $this->belongsToMany(User::class, 'user_package')->withPivot('investment_amount');
+        return $this->belongsToMany(User::class, 'user_package')->withPivot('investment_amount', 'avatar');
     }
 
     public function funds()

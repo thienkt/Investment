@@ -15,10 +15,11 @@ class FundCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->map(function ($data) {
-            return [
+            return removeNullish([
                 'id' => $data->id,
                 'code' => $data->code,
-            ];
+                "percentage" => $data->pivot?->allocation_percentage,
+            ]);
         });
     }
 }

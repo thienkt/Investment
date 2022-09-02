@@ -34,9 +34,12 @@ Route::middleware('auth:sanctum')->group(
         Route::prefix('packages')->group(function () {
             Route::get('/default', [PackageController::class, 'getDefaultPackages'])->name('packages.default');
             Route::get('/customization', [PackageController::class, 'getCustomizedPackages'])->name('packages.customization');
+            Route::get('/{id}', [PackageController::class, 'getPackageDetail'])->name('packages.detail');
+            Route::get('/history/{id}', [PackageController::class, 'getHistory'])->name('packages.history');
             Route::post('/create', [PackageController::class, 'create'])->name('packages.create');
             Route::post('/clone/{id}', [PackageController::class, 'clone'])->name('packages.clone');
             Route::post('/change-avatar/{id}', [PackageController::class, 'changeAvatar'])->name('packages.change_avatar');
+            Route::delete('/{id}', [PackageController::class, 'destroy'])->name('packages.delete');
         });
     }
 );

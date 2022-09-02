@@ -42,7 +42,7 @@ class PackageService extends BaseService
                 throw new Exception('An error has occurred');
             }
 
-            $package->owners()->sync([
+            $package->owners()->attach([
                 Auth::id() => [
                     'investment_amount' => 0,
                     'created_at' => now(),
@@ -67,12 +67,7 @@ class PackageService extends BaseService
 
             DB::commit();
 
-            $newPackage = $package->join('user_package', 'packages.id', '=', 'user_package.package_id')
-                ->where('user_id', Auth::id())
-                ->orderBy('user_package.created_at', 'desc')
-                ->firstOrFail();
-
-            return $this->ok(new PackageResource($newPackage));
+            return $this->ok("Created", self::HTTP_CREATED);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -87,7 +82,26 @@ class PackageService extends BaseService
 
             return $this->ok($package);
         } catch (Exception $e) {
-            return $this->error($e, 'The package ID does not exist', BaseService::HTTP_NOT_FOUND);
+            return $this->error($e, 'The package ID does not exist', self::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function clone($id)
+    {
+        try {
+            $package = Package::findOrFail($id);
+
+            $package->owners()->attach([
+                Auth::id() => [
+                    'investment_amount' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+            ]);
+
+            return $this->ok("Created", self::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->error($e, 'An error has occurred');
         }
     }
 
@@ -99,8 +113,14 @@ class PackageService extends BaseService
 
     public function destroy($id)
     {
-        $package = $this->package->destroy($id);
-        return $package;
+        try {
+            $package = Package::find($id);
+            $package->owners()->wherePivot('user_id', '=', Auth::id())->detach();
+
+            return $this->ok(null, self::HTTP_NO_CONTENT);
+        } catch (\Throwable $th) {
+            return $this->error($th, 'An error has occurred');
+        }
     }
 
     public function changeAvatar($userPackageId, $avatar)
@@ -109,7 +129,7 @@ class PackageService extends BaseService
             $userPackage = DB::table('user_package')->where(['user_id' => Auth::id(), 'id' => $userPackageId])->first();
 
             if (!$userPackage) {
-                throw new Exception('Permission denied', BaseService::HTTP_FORBIDDEN);
+                throw new Exception('Permission denied', self::HTTP_FORBIDDEN);
             }
 
             $filePath = Config('app.asset_url') . $this->store->upload($avatar);
@@ -120,7 +140,7 @@ class PackageService extends BaseService
                 return $this->ok("Success");
             }
 
-            throw new Exception('An error has occurred', BaseService::HTTP_INTERNAL_SERVER_ERROR);
+            throw new Exception('An error has occurred', self::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
             dd($e);
             return $this->error($e, $e->getMessage(), $e->getCode());
@@ -136,6 +156,28 @@ class PackageService extends BaseService
         } catch (Exception $e) {
             return $this->error($e);
         }
+    }
+
+    /**
+     * @return PackageResource
+     */
+    public function getPackageDetail($id)
+    {
+        try {
+            $package = Package::findOrFail($id);
+            $user = $package->owners()
+                ->wherePivot('user_id', '=', Auth::id())
+                ->first();
+            $package->owner = $user?->pivot;
+            return $this->ok(new PackageResource($package));
+        } catch (Exception $e) {
+            return $this->error($e, 'An error has occurred');
+        }
+    }
+
+    public function getHistory($id)
+    {
+        return $this->ok($id);
     }
 
     public function getCustomizedPackages()

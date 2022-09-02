@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePackageAvatarRequest;
 use App\Http\Requests\CreatePackageRequest;
+use App\Http\Requests\PackageIdNeededRequest;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
 
@@ -41,14 +42,24 @@ class PackageController extends Controller
         return $this->package->getCustomizedPackages();
     }
 
+    public function getPackageDetail(PackageIdNeededRequest $request)
+    {
+        return $this->package->getPackageDetail($request->id);
+    }
+
+    public function getHistory(PackageIdNeededRequest $request)
+    {
+        return $this->package->getHistory($request->id);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function clone(CreatePackageRequest $request, $id)
+    public function clone(PackageIdNeededRequest $request)
     {
-        // TODO
+        return $this->package->clone($request->id);
     }
 
     /**
@@ -96,8 +107,8 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PackageIdNeededRequest $request)
     {
-        //
+        return $this->package->destroy($request->id);
     }
 }

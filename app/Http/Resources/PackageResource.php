@@ -14,12 +14,14 @@ class PackageResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        return removeNullish([
             'id' => $this->id,
-            'avatar' => $this->avatar ?? Config('package.default_avatar'),
-            'investment_amount' => $this->investment_amount ?? 0,
+            'package_id' => $this->package_id,
+            'avatar' => $this->owner?->avatar ?? Config('package.default_avatar'),
             'is_default' => $this->is_default ?? false,
             'name' => $this->name,
-        ];
+            'allocation' => $this->funds ? new FundCollection($this->funds) : null,
+            'investment_amount' => $this->owner?->investment_amount ?? "0.000",
+        ]);
     }
 }
