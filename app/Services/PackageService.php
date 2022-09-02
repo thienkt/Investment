@@ -91,6 +91,10 @@ class PackageService extends BaseService
         try {
             $package = Package::findOrFail($id);
 
+            if ($package->owners()->wherePivot('user_id', '=', Auth::id())) {
+                return $this->error(new Exception('You have already cloned this package.'), self::HTTP_FORBIDDEN);
+            }
+
             $package->owners()->attach([
                 Auth::id() => [
                     'investment_amount' => 0,
@@ -101,7 +105,7 @@ class PackageService extends BaseService
 
             return $this->ok("Created", self::HTTP_CREATED);
         } catch (Exception $e) {
-            return $this->error($e, 'An error has occurred');
+            return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
         }
     }
 
@@ -118,8 +122,8 @@ class PackageService extends BaseService
             $package->owners()->wherePivot('user_id', '=', Auth::id())->detach();
 
             return $this->ok(null, self::HTTP_NO_CONTENT);
-        } catch (\Throwable $th) {
-            return $this->error($th, 'An error has occurred');
+        } catch (Exception $e) {
+            return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
         }
     }
 
@@ -142,8 +146,7 @@ class PackageService extends BaseService
 
             throw new Exception('An error has occurred', self::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
-            dd($e);
-            return $this->error($e, $e->getMessage(), $e->getCode());
+            return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -171,7 +174,7 @@ class PackageService extends BaseService
             $package->owner = $user?->pivot;
             return $this->ok(new PackageResource($package));
         } catch (Exception $e) {
-            return $this->error($e, 'An error has occurred');
+            return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
         }
     }
 

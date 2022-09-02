@@ -42,7 +42,7 @@ class FundService extends BaseService
 
             return $this->ok(new FundResource($fund));
         } catch (Exception $e) {
-            return $this->error($e, 'The fund ID does not exist', BaseService::HTTP_NOT_FOUND);
+            return $this->error($e, BaseService::HTTP_NOT_FOUND, 'The fund ID does not exist');
         }
     }
 
