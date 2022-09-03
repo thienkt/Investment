@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(
             Route::post('/create', [PackageController::class, 'create'])->name('packages.create');
             Route::post('/clone/{id}', [PackageController::class, 'clone'])->name('packages.clone');
             Route::post('/change-avatar/{id}', [PackageController::class, 'changeAvatar'])->name('packages.change_avatar');
+            Route::put('/update/{id}', [PackageController::class, 'update'])->name('packages.update');
             Route::delete('/{id}', [PackageController::class, 'destroy'])->name('packages.delete');
         });
     }

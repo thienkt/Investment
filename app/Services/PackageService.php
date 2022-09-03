@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 class PackageService extends BaseService
 {
     protected $package;
+    protected $fund;
     protected $store;
 
-    public function __construct(PackageRepository $package, FirebaseService $store)
+    public function __construct(PackageRepository $package, FundService $fund, FirebaseService $store)
     {
         $this->store = $store;
+        $this->fund = $fund;
         $this->package = $package;
     }
 
@@ -63,7 +65,7 @@ class PackageService extends BaseService
                 ];
             }
 
-            $package->funds()->sync($funds);
+            $package->funds()->attach($funds);
 
             DB::commit();
 
@@ -82,7 +84,7 @@ class PackageService extends BaseService
 
             return $this->ok($package);
         } catch (Exception $e) {
-            return $this->error($e, 'The package ID does not exist', self::HTTP_NOT_FOUND);
+            return $this->error($e, self::HTTP_NOT_FOUND, 'The package ID does not exist');
         }
     }
 
@@ -111,8 +113,51 @@ class PackageService extends BaseService
 
     public function update($data, $id)
     {
-        $package = $this->package->update($data, $id);
-        return $package;
+        try {
+            $package = Package::join('user_package', 'packages.id', '=', 'user_package.package_id')
+                ->where([
+                    'user_package.id' => $id,
+                    'user_id' => Auth::id()
+                ])->firstOrFail();
+
+            DB::beginTransaction();
+            try {
+                $package = $this->package->store(['name' => $data->name]);
+
+                if (!$package) {
+                    throw new Exception('An error has occurred');
+                }
+
+                $funds = [];
+
+                foreach ($data->allocation as $fund) {
+                    $funds += [
+                        $fund['fund_id'] => [
+                            'allocation_percentage' => $fund['percentage'],
+                            'created_at' => now(),
+                            'updated_at' => now()
+
+                        ]
+                    ];
+                }
+
+                $package->funds()->attach($funds);
+
+                DB::table('user_package')
+                    ->where('id', $id)
+                    ->update(['package_id' => $package->id]);
+
+                DB::commit();
+
+                return $this->ok("Created", self::HTTP_CREATED);
+            } catch (Exception $e) {
+                DB::rollBack();
+
+                return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
+            }
+        } catch (Exception $e) {
+            return $this->error($e, self::HTTP_NOT_FOUND, 'The package ID is invalid');
+        }
     }
 
     public function destroy($id)
@@ -178,9 +223,38 @@ class PackageService extends BaseService
         }
     }
 
-    public function getHistory($id)
+    public function getHistory($id, $month)
     {
-        return $this->ok($id);
+        try {
+            $package = Package::findOrFail($id);
+            $allocation = $package->funds;
+            $maxLength = 0;
+            foreach ($allocation as $fund) {
+                $fund->historical_data = $this->fund->getHistory($fund->id, $this->fund->getPeriod($month), true);
+                $maxLength = max($maxLength, sizeof($fund->historical_data));
+            }
+            $historicalData = [];
+
+            for ($i = $maxLength; $i > 0; $i--) {
+                $data = [
+                    'navCurrent' => 0,
+                    'fundNumber' => 0,
+                ];
+                foreach ($allocation as $fund) {
+                    $index = sizeof($fund->historical_data) - $i;
+                    if (isset($fund->historical_data[$index])) {
+                        $data['matchedDate'] = $fund->historical_data[$index]->matchedDate;
+                        $data['navCurrent'] += $fund->historical_data[$index]->navCurrent * $fund->pivot->allocation_percentage / 100;
+                        $data['fundNumber']++;
+                    }
+                }
+                array_push($historicalData, $data);
+            }
+
+            return $this->ok($historicalData);
+        } catch (Exception $e) {
+            return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
+        }
     }
 
     public function getCustomizedPackages()

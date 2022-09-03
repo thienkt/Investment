@@ -74,8 +74,13 @@ class FundController extends Controller
         return $this->fund->destroy($id);
     }
 
-    public function getHistory($id)
+    /**
+     * @QAparam month integer nullable
+     */
+    public function getHistory(Request $request)
     {
-        return $this->fund->getHistory($id);
+        $query = $this->fund->getPeriod($request->month);
+
+        return $this->fund->getHistory($request->id, $query);
     }
 }

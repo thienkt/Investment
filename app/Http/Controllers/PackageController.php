@@ -47,9 +47,12 @@ class PackageController extends Controller
         return $this->package->getPackageDetail($request->id);
     }
 
+    /**
+     * @QAparam month integer nullable
+     */
     public function getHistory(PackageIdNeededRequest $request)
     {
-        return $this->package->getHistory($request->id);
+        return $this->package->getHistory($request->id, $request->month);
     }
 
     /**
@@ -96,9 +99,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreatePackageRequest $request, $id)
     {
-        //
+        return $this->package->update($request, $id);
     }
 
     /**

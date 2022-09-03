@@ -58,15 +58,36 @@ class FundService extends BaseService
         return $fund;
     }
 
-    public function getHistory($id)
+    /**
+     * @param number $month
+     * @return string
+     */
+    public function getPeriod($month)
+    {
+        if ($month >= 0) {
+            return '&month=' . $month;
+        }
+        return '';
+    }
+
+    /**
+     * @param integer $id
+     * @param string $query
+     * @param boolean $raw
+     */
+    public function getHistory($id, $query = '', $raw = false)
     {
         try {
             $fund = $this->fund->show($id);
             $credential = $fund->credential;
             $token = $this->vendor->getCredential($credential->id);
-            $history = $this->vendor->get($fund->historical_data_url, [
+            $history = $this->vendor->get($fund->historical_data_url . $query, [
                 'headers' => ['Authorization' => 'Bearer ' . $token],
             ]);
+
+            if ($raw) {
+                return $history->value;
+            }
 
             return $this->ok($history->value);
         } catch (Exception $e) {
