@@ -11,8 +11,8 @@ use Exception;
 
 class VendorService extends BaseService
 {
-    private $stack;
-    private $guzzlehttp;
+    protected $stack;
+    protected $guzzlehttp;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class VendorService extends BaseService
         $this->guzzlehttp = new Client(['handler' => $this->stack]);
     }
 
-    private function client()
+    protected function client()
     {
         return $this->guzzlehttp;
     }
@@ -48,11 +48,17 @@ class VendorService extends BaseService
         }
     }
 
-    public function getCredential($credentialId)
+    public function getCredential($credentialId = 0)
     {
         $credential = Credential::find($credentialId);
+
+        if (!$credential) {
+            return '';
+        }
+
         $expiredAt = $credential->expired_at;
         $currentTimeStamp = Carbon::now()->timestamp;
+
         if ($expiredAt < $currentTimeStamp) {
             $credential->expired_at = Carbon::now()->addHour(8)->timestamp;
             $config = Config('vendor.' . $credential->key);

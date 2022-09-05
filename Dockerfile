@@ -6,4 +6,8 @@ RUN set -ex \
     	&& apk --no-cache add postgresql-dev nodejs yarn npm zip unzip php-zip\
     	&& docker-php-ext-install pdo pdo_pgsql
 
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+        && pecl install redis \
+        && docker-php-ext-enable redis.so
+
 WORKDIR /var/www/html
