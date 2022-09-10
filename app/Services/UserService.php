@@ -19,8 +19,9 @@ class UserService extends BaseService
     {
         try {
             $filePath = Config('app.asset_url') . $this->store->upload($image);
-            Auth::user()->avatar = $filePath;
-            User::find(Auth::id())->save();
+            $user = User::find(Auth::id());
+            $user->avatar = $filePath;
+            $user->save();
 
             return $this->ok('Success');
         } catch (Exception $e) {
