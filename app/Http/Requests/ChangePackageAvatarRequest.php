@@ -30,7 +30,7 @@ class ChangePackageAvatarRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric|exists:user_package,id',
+            'id' => 'required|numeric|exists:user_packages,id',
             'avatar' => [File::image()->max(12 * 1024)],
         ];
     }

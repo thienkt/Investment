@@ -114,9 +114,9 @@ class PackageService extends BaseService
     public function update($data, $id)
     {
         try {
-            $package = Package::join('user_package', 'packages.id', '=', 'user_package.package_id')
+            $package = Package::join('user_packages', 'packages.id', '=', 'user_packages.package_id')
                 ->where([
-                    'user_package.id' => $id,
+                    'user_packages.id' => $id,
                     'user_id' => Auth::id()
                 ])->firstOrFail();
 
@@ -143,7 +143,7 @@ class PackageService extends BaseService
 
                 $package->funds()->attach($funds);
 
-                DB::table('user_package')
+                DB::table('user_packages')
                     ->where('id', $id)
                     ->update(['package_id' => $package->id]);
 
@@ -175,7 +175,7 @@ class PackageService extends BaseService
     public function changeAvatar($userPackageId, $avatar)
     {
         try {
-            $userPackage = DB::table('user_package')->where(['user_id' => Auth::id(), 'id' => $userPackageId])->first();
+            $userPackage = DB::table('user_packages')->where(['user_id' => Auth::id(), 'id' => $userPackageId])->first();
 
             if (!$userPackage) {
                 throw new Exception('Permission denied', self::HTTP_FORBIDDEN);
@@ -183,7 +183,7 @@ class PackageService extends BaseService
 
             $filePath = Config('app.asset_url') . $this->store->upload($avatar);
 
-            $isSuccess = DB::table('user_package')->where(['user_id' => Auth::id(), 'id' => $userPackageId])->update(['avatar' => $filePath]);
+            $isSuccess = DB::table('user_packages')->where(['user_id' => Auth::id(), 'id' => $userPackageId])->update(['avatar' => $filePath]);
 
             if ($isSuccess) {
                 return $this->ok("Success");
@@ -261,14 +261,14 @@ class PackageService extends BaseService
     {
         try {
             $packages = Package::join(
-                'user_package',
-                'user_package.package_id',
+                'user_packages',
+                'user_packages.package_id',
                 '=',
                 'packages.id'
             )
                 ->select('packages.*')
-                ->where('user_package.user_id', Auth::id())
-                ->orderBy('user_package.id')
+                ->where('user_packages.user_id', Auth::id())
+                ->orderBy('user_packages.id')
                 ->get();
 
             return $this->ok(new PackageCollection($packages));

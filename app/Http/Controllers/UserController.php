@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UploadImageRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserStatusResource;
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,8 @@ class UserController extends Controller
 
     public function getUserInfo(Request $request)
     {
-        return response()->json(new UserResource($request->user()));
+        dd(User::with('userPackage')->where('id', $request->user()->id)->first());
+        // return response()->json(new UserResource($request->user()));
     }
 
     public function getUserStatus(Request $request)

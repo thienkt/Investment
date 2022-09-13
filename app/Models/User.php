@@ -15,7 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable, HasApiTokens, TwoFactorAuthenticatable, SoftDeletes;
 
     public $timestamps = true;
-/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -61,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function packages()
     {
-        return $this->belongsToMany(Package::class, 'user_package')->withPivot('investment_amount',  'avatar');
+        return $this->belongsToMany(Package::class, 'user_packages')->withPivot('investment_amount',  'avatar');
+    }
+
+    public function userPackages()
+    {
+        return $this->hasMany(UserPackage::class, 'user_id');
     }
 }
