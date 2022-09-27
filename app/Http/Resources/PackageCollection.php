@@ -18,7 +18,8 @@ class PackageCollection extends ResourceCollection
             return [
                 'avatar' => $data->avatar ?? Config('package.default_avatar'),
                 'id' => $data->id,
-                'name' => $data->name
+                'name' => $data->name,
+                'year_average' => +$data->year_average
             ];
         });
     }

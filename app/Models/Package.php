@@ -18,6 +18,7 @@ class Package extends Model
      */
     protected $fillable = [
         'name',
+        'year_average'
     ];
 
     public function owners()
