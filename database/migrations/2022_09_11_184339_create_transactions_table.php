@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('user_packages', function (Blueprint $table) {
+            $table->unique('id')->change();
+        });
+
         Schema::create('transactions', function (Blueprint $table) {
-            $table->string('id', 16)->unique()->primary();
+            $table->uuid('id');
+            $table->primary('id');
             $table->bigInteger('amount')->unsigned();
             $table->integer('status')->unsigned();
             $table->bigInteger('user_package_id')->unsigned();
@@ -31,5 +36,9 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('transactions');
+
+        Schema::table('user_packages', function (Blueprint $table) {
+            $table->dropUnique('user_packages_id_unique');
+        });
     }
 };

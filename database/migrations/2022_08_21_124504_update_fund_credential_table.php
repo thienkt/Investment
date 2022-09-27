@@ -19,14 +19,14 @@ return new class extends Migration
         });
 
         Schema::table('fund_credentials', function (Blueprint $table) {
-            $table->dropPrimary('id');
+            // $table->dropPrimary('id');
             $table->renameColumn('id', 'key');
         });
 
         Schema::table('fund_credentials', function (Blueprint $table) {
             $table->text('token')->nullable()->change();
             $table->integer('expired_at')->nullable();
-            $table->integer('id')->first()->autoIncrement();
+            $table->id();
         });
 
         DB::statement('ALTER TABLE funds ALTER COLUMN credential_id TYPE integer USING 1');
@@ -74,7 +74,7 @@ return new class extends Migration
 
         $credential = DB::table('fund_credentials')->select('id')->first();
 
-        DB::table('funds')->update(["credential_id" => $credential->id]);
+        DB::table('funds')->update(["credential_id" => $credential?->id]);
 
         Schema::table('funds', function (Blueprint $table) {
             $table
