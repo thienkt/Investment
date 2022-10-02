@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePackageAvatarRequest;
 use App\Http\Requests\CreatePackageRequest;
+use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\PackageIdNeededRequest;
+use App\Models\Transaction;
+use App\Models\UserPackage;
 use App\Services\PackageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
@@ -85,6 +89,28 @@ class PackageController extends Controller
     public function show($id)
     {
         return $this->package->show($id);
+    }
+
+    public function createTransaction($packageId, CreateTransactionRequest $request)
+    {
+        try {
+            $userId = Auth::user()->id;
+            $userPackage = UserPackage::where([
+                'user_id' => $userId,
+                'package_id' => $packageId
+            ])->firstOrFail();
+            $transaction = Transaction::create([
+                'id' => \Illuminate\Support\Str::uuid(),
+                'status' => 0,
+                'amount' => $request->amount
+            ]);
+
+            $transaction->userPackage()->save($userPackage);
+
+            dd($transaction);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     public function changeAvatar(ChangePackageAvatarRequest $request)

@@ -231,7 +231,7 @@ class PackageService extends BaseService
             $maxLength = 0;
             foreach ($allocation as $fund) {
                 $fund->historical_data = $this->fund->getHistory($fund->id, $this->fund->getPeriod($month), true);
-                $maxLength = max($maxLength, sizeof($fund->historical_data));
+                $maxLength = max($maxLength, sizeof($fund->historical_data ?? []));
             }
             $historicalData = [];
 
