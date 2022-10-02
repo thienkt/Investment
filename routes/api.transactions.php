@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 # api/transactions/
 
-// Route::get('/{id}', [PackageController::class, 'getPackageDetail'])->name('packages.detail');
+Route::get('/{id}/check-payment', [TransactionController::class, 'checkPayment'])->name('transaction.check-payment');

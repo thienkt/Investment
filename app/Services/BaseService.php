@@ -70,12 +70,12 @@ class BaseService
     const HTTP_NOT_EXTENDED = 510;                                                // RFC2774
     const HTTP_NETWORK_AUTHENTICATION_REQUIRED = 511;
 
-    protected function ok($data, $status = self::HTTP_OK)
+    public function ok($data, $status = self::HTTP_OK)
     {
         return response()->json($data, $status);
     }
 
-    protected function error(Exception $e, $status = self::HTTP_INTERNAL_SERVER_ERROR, $msg = '')
+    public function error(Exception $e, $status = self::HTTP_INTERNAL_SERVER_ERROR, $msg = '')
     {
         return response()->json([
             'errors' => ['exception' => $e->getMessage()],

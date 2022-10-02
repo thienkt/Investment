@@ -5,5 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 # api/funds/
 
-Route::get('/history/{id}', [FundController::class, 'getHistory'])->where('id', '[0-9]+')->name('funds.history');
-Route::apiResource('/', FundController::class)->only(['index', 'show']);
+Route::get('/{id}/history', [FundController::class, 'getHistory'])->where('id', '[0-9]+')->name('funds.history');
+Route::get('/', [FundController::class, 'index'])->name('funds.list');
+Route::get('/{id}', [FundController::class, 'show'])->name('funds.detail');

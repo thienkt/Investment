@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserPackage extends Model
 {
@@ -20,18 +22,18 @@ class UserPackage extends Model
         'balance'
     ];
 
-    public function owner()
+    public function owner(): HasOne
     {
         return $this->hasOne(User::class, 'user_id');
     }
 
-    public function package()
+    public function package(): HasOne
     {
         return $this->hasOne(Package::class, 'package_id');
     }
 
-    public function transaction()
+    public function transactions(): HasMany
     {
-        return $this->belongsToMany(Transaction::class);
+        return $this->hasMany(Transaction::class);
     }
 }

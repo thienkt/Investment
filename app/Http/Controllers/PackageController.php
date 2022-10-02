@@ -4,22 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePackageAvatarRequest;
 use App\Http\Requests\CreatePackageRequest;
+use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\PackageIdNeededRequest;
+use App\Services\BankService;
 use App\Services\PackageService;
-use Illuminate\Http\Request;
+use App\Services\TransactionService;
+use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
     protected $package;
+    protected $transaction;
+    protected $bank;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(PackageService $package)
+    public function __construct(PackageService $package, TransactionService $transaction, BankService $bank)
     {
         $this->package = $package;
+        $this->transaction = $transaction;
+        $this->bank = $bank;
     }
 
     /**
@@ -85,6 +92,22 @@ class PackageController extends Controller
     public function show($id)
     {
         return $this->package->show($id);
+    }
+
+    public function createTransaction($packageId, CreateTransactionRequest $request)
+    {
+        $ref = $this->transaction->create(Auth::id(), $packageId, $request->amount);
+        $bankInfo = $this->bank->getBankInfo();
+
+        return $this->transaction->ok(
+            array_merge(
+                $bankInfo,
+                [
+                    'reference_number' => $ref,
+                    'transfer_amount' => number_format($request->amount)
+                ]
+            )
+        );
     }
 
     public function changeAvatar(ChangePackageAvatarRequest $request)

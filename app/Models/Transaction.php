@@ -23,6 +23,6 @@ class Transaction extends Model
 
     public function userPackage()
     {
-        return $this->hasOne(UserPackage::class);
+        return $this->belongsTo(UserPackage::class);
     }
 }
