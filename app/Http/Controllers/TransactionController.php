@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TransactionCollection;
+use App\Models\Transaction;
 use App\Services\BankService;
 use Illuminate\Http\Request;
 
@@ -14,8 +16,15 @@ class TransactionController extends Controller
         $this->bank = $bank;
     }
 
+    public function index()
+    {
+        $transactions = Transaction::all();
+
+        return $this->bank->ok(new TransactionCollection($transactions));
+    }
+
     public function checkPayment($transactionId)
     {
-        $this->bank->checkPayment();
+        return $this->bank->checkPayment($transactionId);
     }
 }

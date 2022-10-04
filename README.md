@@ -17,7 +17,7 @@ cp .env.example .env
 ```
 ## Attach shell
 ```bash
-docker exec -it tikop_app sh
+docker exec -it tichcop_app sh
 ```
 > ### Install pakages
 > ```bash
@@ -41,3 +41,7 @@ docker exec -it tikop_app sh
 > php artisan lrd:generate
 > ```
 > Docs HTML is generated inside `/public/docs/`
+
+## Frontend Repo
+
+> https://github.com/tienhgm/invest_tik

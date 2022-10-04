@@ -9,6 +9,7 @@ use App\Http\Requests\PackageIdNeededRequest;
 use App\Services\BankService;
 use App\Services\PackageService;
 use App\Services\TransactionService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
@@ -97,6 +98,11 @@ class PackageController extends Controller
     public function createTransaction($packageId, CreateTransactionRequest $request)
     {
         $ref = $this->transaction->create(Auth::id(), $packageId, $request->amount);
+
+        if (!$ref) {
+            return $this->package->error(new Exception('Create transaction failed'));
+        }
+
         $bankInfo = $this->bank->getBankInfo();
 
         return $this->transaction->ok(

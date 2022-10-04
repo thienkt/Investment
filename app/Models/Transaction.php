@@ -9,6 +9,8 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     public $timestamps = true;
     /**
      * The attributes that are mass assignable.
@@ -19,6 +21,7 @@ class Transaction extends Model
         'id',
         'amount',
         'status',
+        'type',
     ];
 
     public function userPackage()

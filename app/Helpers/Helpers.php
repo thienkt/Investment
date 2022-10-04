@@ -23,3 +23,10 @@ if (!function_exists('getRandomString')) {
         return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' . $salt, ceil($length / strlen($x)))), 1, $length);
     }
 }
+
+if (!function_exists('formatDate')) {
+    function formatDate($dateString, $pattern = "d-m-Y")
+    {
+        return date($pattern, strtotime($dateString));
+    }
+}

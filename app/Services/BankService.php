@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Transaction;
 use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 class BankService extends VendorService
 {
@@ -73,8 +75,41 @@ class BankService extends VendorService
         }
     }
 
-    public function checkPayment()
+    public function checkPayment($id)
     {
-        $this->getTransactionHistory();
+        try {
+            $transaction = Transaction::findOrFail($id);
+
+            if ($transaction->status) {
+                return $this->ok([
+                    'payment_status' => (bool) $transaction->status
+                ]);
+            }
+
+            $bankHistory = $this->getTransactionHistory();
+
+            $matches = array();
+
+            foreach ($bankHistory as $key => $value) {
+                preg_match("/[a-zA-Z0-9]{16}/", $value->description, $matches);
+                $ref = $matches[0] ?? null;
+
+                if ($ref && $ref === $id && $value->amount == $transaction->amount) {
+                    $transaction->status = true;
+                    $transaction->save();
+
+                    // TODO: buy fund credential
+                    break;
+                }
+            }
+
+            return $this->ok([
+                'payment_status' => $transaction->status
+            ]);
+        } catch (Exception $e) {
+            return $this->ok([
+                'payment_status' => false
+            ]);
+        }
     }
 }
