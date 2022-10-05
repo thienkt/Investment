@@ -19,7 +19,8 @@ class PackageCollection extends ResourceCollection
                 'avatar' => $data->avatar ?? Config('package.default_avatar'),
                 'id' => $data->id,
                 'name' => $data->name,
-                'year_average' => +$data->year_average
+                'year_average' => +$data->year_average,
+                'investment_amount' => $data->investment_amount
             ];
         });
     }

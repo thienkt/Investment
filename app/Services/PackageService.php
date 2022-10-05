@@ -266,7 +266,7 @@ class PackageService extends BaseService
                 '=',
                 'packages.id'
             )
-                ->select('packages.*')
+                ->select('*')
                 ->where('user_packages.user_id', Auth::id())
                 ->orderBy('user_packages.id')
                 ->get();
