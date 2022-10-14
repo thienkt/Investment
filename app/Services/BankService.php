@@ -5,10 +5,16 @@ namespace App\Services;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Request;
 
 class BankService extends VendorService
 {
+    const STATUS_NEW = 0;
+    const STATUS_PAID = 1;
+    const STATUS_BOUGHT = 2;
+    const STATUS_SOLD = 3;
+    const STATUS_ADVANCED_MONEY = 4;
+    const STATUS_WITHDRAWN = 5;
+
     /**
      * @override
      */
@@ -95,7 +101,7 @@ class BankService extends VendorService
                 $ref = $matches[0] ?? null;
 
                 if ($ref && $ref === $id && $value->amount == $transaction->amount) {
-                    $transaction->status = true;
+                    $transaction->status = 1;
                     $transaction->save();
 
                     // TODO: buy fund credential
@@ -104,7 +110,7 @@ class BankService extends VendorService
             }
 
             return $this->ok([
-                'payment_status' => $transaction->status
+                'payment_status' => (bool) $transaction->status
             ]);
         } catch (Exception $e) {
             return $this->ok([

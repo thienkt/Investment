@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fund extends Model
@@ -23,13 +26,18 @@ class Fund extends Model
         'historical_data_url',
     ];
 
-    public function credential()
+    public function credential(): BelongsTo
     {
         return $this->belongsTo(Credential::class);
     }
 
-    public function packages()
+    public function packages(): BelongsToMany
     {
         return $this->belongsToMany(Package::class);
+    }
+
+    public function assets(): HasMany
+    {
+        return $this->hasMany(UserAsset::class);
     }
 }

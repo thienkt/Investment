@@ -6,6 +6,7 @@ use App\Http\Resources\FundCollection;
 use App\Http\Resources\FundResource;
 use App\Repositories\FundRepository;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class FundService extends BaseService
 {
@@ -92,6 +93,18 @@ class FundService extends BaseService
             return $this->ok($history->value);
         } catch (Exception $e) {
             return $this->error($e);
+        }
+    }
+
+    public function updateDailyPrice()
+    {
+        $funds = $this->fund->index();
+
+        foreach ($funds as $fund) {
+            $history = $this->getHistory($fund->id, '&month=1', true);
+            $lastPrice = array_pop($history)->navCurrent;
+            $fund->current_value = $lastPrice;
+            $fund->save();
         }
     }
 }

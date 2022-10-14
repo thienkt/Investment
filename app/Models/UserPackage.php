@@ -36,4 +36,9 @@ class UserPackage extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function assets(): HasMany
+    {
+        return $this->hasMany(UserAsset::class);
+    }
 }
