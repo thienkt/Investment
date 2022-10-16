@@ -18,7 +18,7 @@ class BankService extends VendorService
     /**
      * @override
      */
-    public function getCredential($credentialId = 0)
+    public function getCredential($credentialId = 0, $forceUpdate = false)
     {
         try {
             $credential = Cache::get('bank:::credential', false);

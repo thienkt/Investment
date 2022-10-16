@@ -48,7 +48,7 @@ class VendorService extends BaseService
         }
     }
 
-    public function getCredential($credentialId = 0)
+    public function getCredential($credentialId = 0, $forceUpdate = false)
     {
         $credential = Credential::find($credentialId);
 
@@ -59,9 +59,9 @@ class VendorService extends BaseService
         $expiredAt = $credential->expired_at;
         $currentTimeStamp = Carbon::now()->timestamp;
 
-        if ($expiredAt < $currentTimeStamp) {
+        if ($expiredAt < $currentTimeStamp || $forceUpdate) {
             $credential->expired_at = Carbon::now()->addHour(8)->timestamp;
-            $config = Config('vendor.' . $credential->key);
+            $config = Config('vendor');
             $options = [
                 'body' => json_encode([
                     'username' => $config['username'],
@@ -74,5 +74,12 @@ class VendorService extends BaseService
         }
 
         return $credential->token;
+    }
+
+    public function updateCredential($credentialId, $accessToken)
+    {
+        $credential = Credential::find($credentialId);
+        $credential->token = $accessToken;
+        $credential->save();
     }
 }
