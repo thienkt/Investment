@@ -24,7 +24,7 @@ class UserController extends Controller
     }
 
     public function getAssetInfo(Request $request) {
-       return $this->user->getAssetInfo($request->user());
+       return $this->user->getAssetInfo();
     }
 
     public function getUserStatus(Request $request)

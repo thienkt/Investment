@@ -17,7 +17,11 @@ class FundTransaction extends Model
         'amount',
         'status',
         'type',
-        'ref'
+        'ref',
+        'purchaser',
+        'transaction_id',
+        'volume',
+        'price'
     ];
 
     public function userAsset(): BelongsTo

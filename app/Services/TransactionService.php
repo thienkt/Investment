@@ -24,7 +24,8 @@ class TransactionService extends BaseService
             $transaction = Transaction::create([
                 'id' =>  $transactionId,
                 'status' => 0,
-                'amount' => $amount
+                'amount' => $amount,
+                'purchaser' => $userId
             ]);
 
             $userPackage->transactions()->save($transaction);
