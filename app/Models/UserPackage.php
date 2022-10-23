@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -27,9 +28,9 @@ class UserPackage extends Model
         return $this->hasOne(User::class, 'user_id');
     }
 
-    public function package(): HasOne
+    public function package(): BelongsTo
     {
-        return $this->hasOne(Package::class, 'package_id');
+        return $this->belongsTo(Package::class, 'package_id');
     }
 
     public function transactions(): HasMany

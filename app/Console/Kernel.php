@@ -19,8 +19,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('price:daily')->everyMinute();
+        //TODO: $schedule->command('price:daily')->dailyAt();
+        $schedule->command('price:daily')->daily();
     }
 
     /**
