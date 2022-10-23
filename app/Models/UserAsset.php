@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserAsset extends Model
 {
@@ -12,6 +13,8 @@ class UserAsset extends Model
     protected $fillable = [
         'id',
         'amount',
+        'user_package_id',
+        'fund_id'
     ];
 
     public function fund()
@@ -22,5 +25,10 @@ class UserAsset extends Model
     public function package()
     {
         return $this->belongsTo(UserPackage::class);
+    }
+
+    public function fundTransactions(): HasMany
+    {
+        return $this->hasMany(FundTransaction::class);
     }
 }

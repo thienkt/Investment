@@ -30,7 +30,8 @@ class UserService extends BaseService
         }
     }
 
-    public function getAssetInfo(User $user) {
+    public function getAssetInfo(User $user)
+    {
         $userPackages = $user->userPackages;
 
         $userPackageIds = [];
@@ -39,7 +40,7 @@ class UserService extends BaseService
             array_push($userPackageIds, $value->id);
         }
         $asset = UserAsset::whereIn('user_package_id', $userPackageIds)->get();
-        echo json_encode($userPackages);dd();
+        return $this->ok($userPackages);
         // echo json_encode($asset);
         // dd(User::with('userPackage')->where('id', $request->user()->id)->first());
         // return response()->json(new UserResource($request->user()));

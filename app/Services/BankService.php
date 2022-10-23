@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\FundTransaction;
 use App\Models\Transaction;
+use App\Models\UserAsset;
 use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class BankService extends VendorService
 {
@@ -14,6 +18,12 @@ class BankService extends VendorService
     const STATUS_SOLD = 3;
     const STATUS_ADVANCED_MONEY = 4;
     const STATUS_WITHDRAWN = 5;
+    const STATUS_FAILURE = 6;
+
+    const TYPE_BUY = 0;
+    const TYPE_SELL = 1;
+    const TYPE_WITHDRAWN = 2;
+
 
     /**
      * @override
@@ -104,7 +114,8 @@ class BankService extends VendorService
                     $transaction->status = 1;
                     $transaction->save();
 
-                    // TODO: buy fund credential
+                    $this->buyFundCertificate($transaction);
+
                     break;
                 }
             }
@@ -117,5 +128,87 @@ class BankService extends VendorService
                 'payment_status' => false
             ]);
         }
+    }
+
+    public function buyFundCertificate($transaction)
+    {
+        $userPackage = $transaction->userPackage;
+
+        foreach ($userPackage->package->funds as $index => $fund) {
+            $vendorConfig = Config('vendor');
+            $tradeUrl = $vendorConfig['trade_url'];
+            $accountId = $vendorConfig['account_id'];
+            $percentage = $fund->pivot->allocation_percentage;
+            $amount = $transaction->amount * $percentage / 100;
+
+            $options = [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $fund->credential->token
+                ],
+                'body' => json_encode([
+                    "action" => "BUY",
+                    "status" => "BOOKING",
+                    "transactionValue" => $amount,
+                    "productCode" => $fund->code,
+                    "autoPurchase" => 1,
+                    "type" => [
+                        "value" => "NORMAL",
+                        "period" => "ST"
+                    ],
+                    "matchedDate" => date("Y-m-d", strtotime("2 days")),
+                    "periodicOrder" => false,
+                    "purchaserId" => $accountId,
+                    "accountId" => $accountId,
+                    "referralCode" => null
+                ])
+            ];
+
+
+            $userAsset = UserAsset::firstOrCreate([
+                'user_package_id' => $userPackage->id,
+                'fund_id' => $fund->id,
+            ]);
+
+            try {
+                $tradeResponse = $this->post($tradeUrl, $options);
+            } catch (\Throwable $th) {
+                $userAsset->fundTransactions()->save(new FundTransaction([
+                    'amount' => $amount,
+                    'status' => self::STATUS_FAILURE,
+                    'type' => self::TYPE_BUY,
+                    'ref' => $tradeResponse->id
+                ]));
+
+                return;
+            }
+
+            $userAsset->fundTransactions()->save(new FundTransaction([
+                'amount' => $amount,
+                'status' => self::STATUS_NEW,
+                'type' => self::TYPE_BUY,
+                'ref' => $tradeResponse->id
+            ]));
+        }
+    }
+
+    public function cancelFundTransaction($orderList, $accessToken)
+    {
+        $vendorConfig = Config('vendor');
+        $tradeCancelUrl = $vendorConfig['trade_cancel_url'];
+
+        $options = [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $accessToken
+            ],
+            'body' => json_encode([
+                'orderList' => $orderList
+            ])
+        ];
+
+        $this->put($tradeCancelUrl, $options);
     }
 }

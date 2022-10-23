@@ -48,6 +48,17 @@ class VendorService extends BaseService
         }
     }
 
+    public function put($uri, $options)
+    {
+        try {
+            $res =  $this->client()->put($uri, $options);
+
+            return json_decode($res->getBody());
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
     public function getCredential($credentialId = 0, $forceUpdate = false)
     {
         $credential = Credential::find($credentialId);
