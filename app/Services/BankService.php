@@ -6,9 +6,8 @@ use App\Models\FundTransaction;
 use App\Models\Transaction;
 use App\Models\UserAsset;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
 
 class BankService extends VendorService
 {
@@ -178,7 +177,9 @@ class BankService extends VendorService
                     'amount' => $amount,
                     'status' => self::STATUS_FAILURE,
                     'type' => self::TYPE_BUY,
-                    'ref' => $tradeResponse->id
+                    'ref' => $tradeResponse->id,
+                    'transaction_id' => $transaction->id,
+                    'purchaser' => Auth::id()
                 ]));
 
                 return;
@@ -188,7 +189,10 @@ class BankService extends VendorService
                 'amount' => $amount,
                 'status' => self::STATUS_NEW,
                 'type' => self::TYPE_BUY,
-                'ref' => $tradeResponse->id
+                'ref' => $tradeResponse->id,
+                'transaction_id' => $transaction->id,
+                'purchaser' => Auth::id()
+
             ]));
         }
     }

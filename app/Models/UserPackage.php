@@ -23,6 +23,10 @@ class UserPackage extends Model
         'balance'
     ];
 
+    protected $casts = [
+        'investment_amount' => 'float',
+    ];
+
     public function owner(): HasOne
     {
         return $this->hasOne(User::class, 'user_id');

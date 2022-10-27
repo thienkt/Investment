@@ -22,6 +22,7 @@ class Transaction extends Model
         'amount',
         'status',
         'type',
+        'purchaser'
     ];
 
     public function userPackage()
