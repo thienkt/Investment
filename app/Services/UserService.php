@@ -44,6 +44,11 @@ class UserService extends BaseService
 
             $total = 0;
 
+            $balance = 0;
+
+            $profit = 0;
+
+            $started_at = false;
 
             foreach ($userPackages as $key => $userPackage) {
                 array_push($userPackageIds, $userPackage->id);
@@ -59,13 +64,13 @@ class UserService extends BaseService
                 $userPackage->balance = 0;
 
                 $total += $investmentAmount;
+                $profit -= $investmentAmount;
 
                 $userAssets[$userPackage->id] = $userPackage;
             }
 
             $assets = UserAsset::with(['fund', 'fundTransactions'])->whereIn('user_package_id', $userPackageIds)->get();
 
-            $balance = 0;
 
             foreach ($assets as $key => $asset) {
                 $amount = $asset->amount * $asset->fund->current_value;
@@ -74,25 +79,35 @@ class UserService extends BaseService
 
                 $userAssets[$asset->user_package_id]->balance += $amount;
                 $userAssets[$asset->user_package_id]->profit += $amount;
+                $profit += $amount;
             }
 
-            $trans = FundTransaction::with('userAsset')->where('purchaser', '=', Auth::id())->get();
+            $trans = FundTransaction::with('userAsset')->where('purchaser', '=', Auth::id())->orderBy('created_at')->get();
+
 
             foreach ($trans as $key => $transaction) {
+                if (!$started_at) {
+                    $started_at = $transaction->created_at;
+                }
+
                 if ($transaction->status === BankService::STATUS_NEW && $transaction->type === BankService::TYPE_BUY) {
                     $balance += $transaction->amount;
                     $userAssets[$transaction->userAsset->user_package_id]->balance += $transaction->amount;
                     $userAssets[$transaction->userAsset->user_package_id]->profit += $transaction->amount;
+                    $profit += $transaction->amount;
                 }
 
                 if ($transaction->status === BankService::STATUS_SOLD && $transaction->type === BankService::TYPE_SELL) {
                     $amount = $transaction->volume * $transaction->price;
                     $userAssets[$transaction->userAsset->user_package_id]->profit += $amount;
+                    $profit += $amount;
                 }
             }
 
             return $this->ok([
                 'total_invest' => $total,
+                'started_at' => $started_at,
+                'profit' => $profit,
                 'balance' =>  $balance,
                 'packages' => $userAssets
             ]);
