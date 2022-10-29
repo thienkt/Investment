@@ -104,12 +104,17 @@ class UserService extends BaseService
                 }
             }
 
+            $packages = [];
+            foreach ($userAssets as $asset) {
+                array_push($packages, $asset);
+            }
+
             return $this->ok([
                 'total_invest' => $total,
                 'started_at' => $started_at,
                 'profit' => $profit,
                 'balance' =>  $balance,
-                'packages' => $userAssets
+                'packages' =>  $packages
             ]);
         } catch (\Throwable $th) {
             dd($th);
