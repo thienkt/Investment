@@ -21,7 +21,7 @@ class PackageResource extends JsonResource
             'is_default' => $this->is_default ?? false,
             'name' => $this->name,
             'allocation' => $this->funds ? new FundCollection($this->funds) : null,
-            'investment_amount' => $this->owner?->investment_amount ?? "0.000",
+            // 'investment_amount' => $this->owner?->investment_amount ?? "0.000",
         ]);
     }
 }

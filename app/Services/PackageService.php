@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Http\Resources\FundCollection;
 use Exception;
 use App\Http\Resources\PackageCollection;
 use App\Http\Resources\PackageResource;
+use App\Models\FundTransaction;
 use App\Models\Package;
+use App\Models\UserAsset;
 use App\Repositories\PackageRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PackageService extends BaseService
 {
@@ -93,7 +97,7 @@ class PackageService extends BaseService
         try {
             $package = Package::findOrFail($id);
 
-            if ($package->owners()->wherePivot('user_id', '=', Auth::id())) {
+            if ($package->owners()->wherePivot('user_id', '=', Auth::id())->first()) {
                 return $this->error(new Exception('You have already cloned this package.'), self::HTTP_FORBIDDEN);
             }
 
@@ -213,11 +217,70 @@ class PackageService extends BaseService
     {
         try {
             $package = Package::findOrFail($id);
+
             $user = $package->owners()
                 ->wherePivot('user_id', '=', Auth::id())
-                ->first();
+                ->firstOrFail();
+
             $package->owner = $user?->pivot;
-            return $this->ok(new PackageResource($package));
+
+            $userPackage = $package->userPackages()
+                ->where('user_id', '=', Auth::id())
+                ->firstOrFail();
+
+            $trans = FundTransaction::join('user_assets', 'fund_transactions.user_asset_id', '=', 'user_assets.id')
+                ->where([
+                    'fund_transactions.purchaser' => Auth::id(),
+                    'user_assets.user_package_id' => $userPackage->id
+                ])
+                ->select('fund_transactions.*')
+                ->get();
+
+            $balance = 0;
+            $profit = 0;
+            $investmentAmount = 0;
+
+            foreach ($userPackage->transactions as $key => $transaction) {
+                $investmentAmount += $transaction->amount;
+            }
+
+            $profit -= $investmentAmount;
+
+            foreach ($trans as $key => $transaction) {
+                if ($transaction->status === BankService::STATUS_NEW && $transaction->type === BankService::TYPE_BUY) {
+                    $balance += $transaction->amount;
+                    $profit += $transaction->amount;
+                    Log::info($transaction->amount);
+                }
+
+                if ($transaction->status === BankService::STATUS_SOLD && $transaction->type === BankService::TYPE_SELL) {
+                    $profit += $transaction->volume * $transaction->price;
+                }
+            }
+
+            $assets = UserAsset::with(['fund', 'fundTransactions'])->where('user_package_id', '=', $userPackage->id)->get();
+
+            foreach ($assets as $key => $asset) {
+                $amount = $asset->amount * $asset->fund->current_value;
+
+                $balance += $amount;
+
+                $profit += $amount;
+            }
+
+            return $this->ok([
+                'id' => $package->id,
+                'package_id' => $package->package_id,
+                'avatar' => $package->owner?->avatar ?? Config('package.default_avatar'),
+                'is_default' => $package->is_default ?? false,
+                'name' => $package->name,
+                'allocation' => $package->funds ? new FundCollection($package->funds) : null,
+                'investment_amount' => $package->owner?->investment_amount ?? "0.000",
+                'profit' => $profit,
+                'investment_amount' =>  $investmentAmount,
+                'balance' => $balance,
+                'transactions' => $trans
+            ]);
         } catch (Exception $e) {
             return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
         }
