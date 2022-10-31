@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ImageController;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::get('/assets/{uid}/{name}',  [ImageController::class, 'getImage'])->name('packages.asset');

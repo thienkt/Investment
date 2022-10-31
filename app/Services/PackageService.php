@@ -282,7 +282,16 @@ class PackageService extends BaseService
                 'transactions' => $trans
             ]);
         } catch (Exception $e) {
-            return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
+            try {
+                $package = Package::findOrFail($id);
+                $user = $package->owners()
+                    ->wherePivot('user_id', '=', Auth::id())
+                    ->first();
+                $package->owner = $user?->pivot;
+                return $this->ok(new PackageResource($package));
+            } catch (\Throwable $th) {
+                return $this->error($e, self::HTTP_INTERNAL_SERVER_ERROR, 'An error has occurred');
+            }
         }
     }
 

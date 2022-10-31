@@ -11,6 +11,7 @@ use App\Services\PackageService;
 use App\Services\TransactionService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class PackageController extends Controller
 {
@@ -102,6 +103,8 @@ class PackageController extends Controller
         if (!$ref) {
             return $this->package->error(new Exception('Create transaction failed'));
         }
+
+        Cache::put('payment-check-needed', now()->addMinutes(2)->toString());
 
         $bankInfo = $this->bank->getBankInfo();
 

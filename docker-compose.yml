@@ -22,9 +22,10 @@ services:
       - webapp
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: uetlearner/tichcop_web:latest
     container_name: ${APP_NAME}_app
     volumes:
       - ./:/var/www/html
