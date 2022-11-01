@@ -41,15 +41,17 @@ class CheckPayment extends Command
     public function handle()
     {
         $checkNeededTime = Cache::get('payment-check-needed');
-        $now =  now()->toString();
+        $now = now()->toString();
         $matches = array();
 
         $transactionList = [];
         $transactionData = [];
 
-        // if ($checkNeededTime === $now || date('i') % 15 === 0) {
-        if (true) {
+        Log::info($now);
+
+        if ($checkNeededTime === $now || date('i') % 15 === 0) {
             $bankHistory = $this->bank->getTransactionHistory();
+            Log::warning("message");
 
             foreach ($bankHistory as $key => $tran) {
                 preg_match("/[a-zA-Z0-9]{16}/", $tran->description, $matches);
@@ -61,16 +63,7 @@ class CheckPayment extends Command
                 }
             }
 
-            $transactionList = ['YLX0vu5CsM6w26P0', 'TiFhWu67Jpr811sV'];
-            $transactionData = [
-                'TiFhWu67Jpr811sV' => 340970,
-                'YLX0vu5CsM6w26P0' => 210105
-            ];
-
-
             $transactions = Transaction::whereIn('id', $transactionList)->where('status', '=', $this->bank::STATUS_NEW)->get();
-
-            Log::info(json_encode($transactions));
 
             foreach ($transactions as $transaction) {
 

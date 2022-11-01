@@ -113,7 +113,8 @@ class PackageController extends Controller
                 $bankInfo,
                 [
                     'reference_number' => $ref,
-                    'transfer_amount' => number_format($request->amount)
+                    'transfer_amount' => number_format($request->amount),
+                    'qr' => "https://img.vietqr.io/image/{$bankInfo['bank_code']}-{$bankInfo['account_number']}-qr_only.jpg?amount={$request->amount}&addInfo={$ref}"
                 ]
             )
         );

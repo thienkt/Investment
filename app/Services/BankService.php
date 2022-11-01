@@ -56,6 +56,7 @@ class BankService extends VendorService
     {
         $bankConfig = Config('bank');
         return [
+            'bank_code' => $bankConfig['code'],
             'bank_name' => $bankConfig['name'],
             'account_number' => $bankConfig['account_number'],
             'beneficiary_name' => $bankConfig['accountant_holder'],

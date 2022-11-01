@@ -42,7 +42,7 @@ return [
         // license that you want to display
         "license" => "Apache 2.0",
         "license_url" => "https://www.apache.org/licenses/LICENSE-2.0.html",
-        "server_url" => env('APP_URL', 'http://localhost'),
+        "server_url" => "/",
 
         // for now putting default responses for all. This can be changed later based on specific needs
         "responses" => [
