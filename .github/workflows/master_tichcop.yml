@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_e7380f0aa0354b0ba7cab833dc7f7f12 }}/uetlearner/tichcop_web:${{ github.sha }}
+        tags: uetlearner/tichcop_web:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
