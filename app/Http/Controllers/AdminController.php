@@ -30,7 +30,7 @@ class AdminController extends Controller
                     'duration' => 28800,
                     'otp' => $otp,
                     'otpTypeName' => "TOTP",
-                    'tcbsId' => "10000425352"
+                    'tcbsId' => $vendorConfig['account_id']
                 ])
             ];
 
