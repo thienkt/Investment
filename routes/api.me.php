@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 # api/me/
 
 Route::get('/', [UserController::class, 'getUserInfo'])->name('user.info');
-Route::post('/change-avatar', [UserController::class, 'changeAvatar'])->name('user.info');
+Route::post('/change-avatar', [UserController::class, 'changeAvatar'])->name('user.change-avatar');
 Route::get('/settings', [UserController::class, 'getUserStatus'])->name('user.status');
 Route::get('/assets', [UserController::class, 'getAssetInfo'])->name('user.asset');
 Route::prefix('kyc-verification')->group(function () {
