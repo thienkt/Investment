@@ -16,3 +16,6 @@ yarn-error.log
 /docker/redis
 *.curl
 *.draft
+/public/build
+/public/docs
+/frontend

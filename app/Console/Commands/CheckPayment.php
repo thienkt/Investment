@@ -47,11 +47,8 @@ class CheckPayment extends Command
         $transactionList = [];
         $transactionData = [];
 
-        Log::info($now);
-
         if ($checkNeededTime === $now || date('i') % 15 === 0) {
             $bankHistory = $this->bank->getTransactionHistory();
-            Log::warning("message");
 
             foreach ($bankHistory as $key => $tran) {
                 preg_match("/[a-zA-Z0-9]{16}/", $tran->description, $matches);
