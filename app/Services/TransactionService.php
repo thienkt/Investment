@@ -2,13 +2,22 @@
 
 namespace App\Services;
 
+use App\Models\FundTransaction;
 use App\Models\Transaction;
 use App\Models\UserPackage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TransactionService extends BaseService
 {
+    public $vendor;
+
+    public function __construct(VendorService $vendor)
+    {
+        $this->vendor = $vendor;
+    }
+
     public function create($userId, $packageId, $amount)
     {
         try {
@@ -33,6 +42,16 @@ class TransactionService extends BaseService
             return $transactionId;
         } catch (\Throwable $th) {
             return false;
+        }
+    }
+
+    public function check()
+    {
+        try {
+            $transactions = FundTransaction::where('status', '=', BankService::STATUS_NEW)->get();
+
+            Log::info(($transactions));
+        } catch (\Throwable $th) {
         }
     }
 }

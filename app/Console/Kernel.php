@@ -23,6 +23,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('price:daily')->daily();
 
         $schedule->command('payment:check')->everyMinute();
+
+        // $schedule->command('transaction:check')->dailyAt('15:00');
+        $schedule->command('transaction:check')->daily();
     }
 
     /**
