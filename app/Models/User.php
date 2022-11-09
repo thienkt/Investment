@@ -36,9 +36,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'created_at',
         'updated_at',
         'is_verify',
-        'portrait',
+        // 'portrait',
         'identity_image_front',
+        'identity_image_front_hash',
         'identity_image_back',
+        'identity_image_back_hash',
+        'issue_place',
+        'issue_date',
+        'valid_date',
     ];
 
     /**
@@ -50,6 +55,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'otp',
         'password',
         'remember_token',
+        'identity_image_front_hash',
+        'identity_image_back_hash',
     ];
 
     /**

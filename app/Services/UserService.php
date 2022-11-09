@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\UserResource;
 use App\Models\FundTransaction;
 use App\Models\User;
 use App\Models\UserAsset;
@@ -13,10 +14,13 @@ use Illuminate\Support\Facades\Log;
 class UserService extends BaseService
 {
     protected $store;
+    protected $vendor;
 
-    public function __construct(FirebaseService $store)
+
+    public function __construct(FirebaseService $store, VendorService $vendor)
     {
         $this->store = $store;
+        $this->vendor = $vendor;
     }
 
     public function changeAvatar($image)
@@ -119,5 +123,83 @@ class UserService extends BaseService
         } catch (\Throwable $th) {
             dd($th);
         }
+    }
+
+    public function uploadEKycImage($file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $filePath = Config('app.asset_url') . $this->store->upload($file);
+
+        $options = [
+            'headers' => config('ekyc'),
+            'multipart' => [
+                [
+                    'name' => 'file',
+                    'contents' => file_get_contents($file),
+                    'filename' => $fileName,
+                    'headers'  => ['Content-Type' => '<Content-type header>']
+                ],
+                ['name' => 'title', 'contents' => $fileName],
+                ['name' => 'description', 'contents' => $fileName]
+            ]
+        ];
+
+        $res = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/file-service/v1/addFile', $options);
+
+        return [
+            'path' => $filePath,
+            'hash' => $res->object->hash
+        ];
+    }
+
+    public function checkIdentityCardImage($user)
+    {
+        try {
+            $time = (int) floor(microtime(true) * 1000);
+
+            if ($user->identity_image_front && $user->identity_image_back) {
+                $imageFront = $user->identity_image_front_hash;
+                $imageBack = $user->identity_image_back_hash;
+                $headers =  array_merge(config('ekyc'), [
+                    'content-type' => 'Application/json',
+                    'mac-address' => 'd8:5e:d3:d2:94:f5 brd ff:ff:ff:ff:ff:ff'
+                ]);
+
+                $options = [
+                    'headers' => $headers,
+                    'body' => json_encode(
+                        [
+                            "img_front" => $imageFront,
+                            "img_back" => $imageBack,
+                            "client_session" => "ANDROID_nokia7.2_28_Simulator_2.4.2_08d2d8686ee5fa0e_" . $time,
+                            "type" => -1,
+                            "crop_param" => "0.14,0.3",
+                            "validate_postcode" => true,
+                            "token" => getRandomString(16, $imageFront)
+                        ]
+                    )
+                ];
+                $res = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id', $options);
+
+                // "id_fake_warning" => "no", TODO: Check
+
+                $user->update([
+                    "name" => $res->object?->name,
+                    "address" => $res->object?->recent_location,
+                    "identity_number" => $res->object?->id,
+                    "dob" => $res->object?->birth_day,
+                    "gender" => $res->object?->gender,
+                    "valid_date" => $res->object?->valid_date,
+                    "issue_place" => $res->object?->issue_place,
+                    "issue_date" => $res->object?->issue_date,
+                ]);
+
+                return $this->ok(new UserResource($user));
+            }
+        } catch (\Throwable $th) {
+            return $this->error($th, self::HTTP_BAD_REQUEST, 'Invalid Image');
+        }
+        return false;
     }
 }
