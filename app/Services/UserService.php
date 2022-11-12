@@ -121,7 +121,7 @@ class UserService extends BaseService
                 'packages' =>  $packages
             ]);
         } catch (\Throwable $th) {
-            dd($th);
+            throw $th;
         }
     }
 
@@ -193,6 +193,7 @@ class UserService extends BaseService
                     "valid_date" => $res->object?->valid_date,
                     "issue_place" => $res->object?->issue_place,
                     "issue_date" => $res->object?->issue_date,
+                    "is_verify" => true
                 ]);
 
                 return $this->ok(new UserResource($user));
