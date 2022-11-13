@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use Kevinrob\GuzzleCache\CacheMiddleware;
 use Exception;
+use GuzzleHttp\Exception\ClientException;
 
 class VendorService extends BaseService
 {
@@ -43,8 +44,11 @@ class VendorService extends BaseService
             $res =  $this->client()->post($uri, $options);
 
             return json_decode($res->getBody());
-        } catch (Exception $e) {
-            throw $e;
+        } catch (ClientException $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+
+            throw new Exception($responseBodyAsString);
         }
     }
 

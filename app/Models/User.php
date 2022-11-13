@@ -57,6 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'identity_image_front_hash',
         'identity_image_back_hash',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**

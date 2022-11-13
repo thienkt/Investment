@@ -19,3 +19,4 @@ yarn-error.log
 /public/build
 /public/docs
 /frontend
+laravel-echo-server.lock

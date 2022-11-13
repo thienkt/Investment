@@ -174,25 +174,26 @@ class UserService extends BaseService
                             "img_back" => $imageBack,
                             "client_session" => "ANDROID_nokia7.2_28_Simulator_2.4.2_08d2d8686ee5fa0e_" . $time,
                             "type" => -1,
-                            "crop_param" => "0.14,0.3",
                             "validate_postcode" => true,
                             "token" => getRandomString(16, $imageFront)
                         ]
                     )
                 ];
-                $res = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id', $options);
+
+                $resFront = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id/front', $options);
+                $resBack = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id/back', $options);
 
                 // "id_fake_warning" => "no", TODO: Check
 
                 $user->update([
-                    "name" => $res->object?->name,
-                    "address" => $res->object?->recent_location,
-                    "identity_number" => $res->object?->id,
-                    "dob" => $res->object?->birth_day,
-                    "gender" => $res->object?->gender,
-                    "valid_date" => $res->object?->valid_date,
-                    "issue_place" => $res->object?->issue_place,
-                    "issue_date" => $res->object?->issue_date,
+                    "name" => $resFront->object?->name,
+                    "address" => $resFront->object?->recent_location,
+                    "identity_number" => $resFront->object?->id,
+                    "dob" => $resFront->object?->birth_day,
+                    "gender" => $resFront->object?->gender,
+                    "valid_date" => $resFront->object?->valid_date,
+                    "issue_place" => $resBack->object?->issue_place,
+                    "issue_date" => $resBack->object?->issue_date,
                     "is_verify" => true
                 ]);
 
