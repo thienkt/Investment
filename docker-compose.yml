@@ -19,7 +19,6 @@ services:
     depends_on:
       - web
       - frontend
-      - db
     networks:
       - webapp
 
@@ -27,11 +26,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: ["yarn", "echo", "--force"]
     container_name: ${APP_NAME}_app
     volumes:
       - ./:/var/www/html
     ports:
       - "9001:9000"
+      - "6001:6001"
     depends_on:
       - db
       - redis

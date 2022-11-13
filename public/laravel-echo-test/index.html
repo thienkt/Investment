@@ -28,13 +28,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.13.0/echo.iife.min.js"
         integrity="sha512-Ax92zSe0oeJH+2xhiDIiwl+8+EJ/ABUlefC6dktaG5/2iOsMCh2eTCMpSYbtUJAZibdC1K5YTJIxKL1A7ONy6g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.1.1/dist/socket.io.js"></script> -->
-    <script src="http://localhost:6001/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.1.1/dist/socket.io.js"></script>
+    <!-- <script src="http://tichcop.koreacentral.cloudapp.azure.com/echo/socket.io/socket.io.js"></script> -->
 
 </head>
 
 <body class="bg-gray-100 tracking-wide bg-gray-200">
-    <div>SSSSSSSSSSSSSSSSSSSSSS</div>
     <script>
         Vue.use(VueMarkdown);
 
@@ -43,39 +42,48 @@
             data: {
             },
             created: function () {
-                axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    axios.defaults.headers.common['Authorization'] = 'Bearer '
+                axios.defaults.headers.common['X-CSRF-TOKEN'] =
+                    document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content');
+
                 this.requestHeaders = JSON.stringify(axios.defaults.headers.common, null, 2)
             },
             mounted() {
-                axios("http://localhost:8000/api/csrf-cookie");
+                axios("/api/csrf-cookie");
 
-                axios.post("http://localhost:8000/api/auth/login", {
+                axios.post("/api/auth/login", {
                     email: "thienkhac8@gmail.com",
                     password: "Thien*#@123"
                 });
 
                 const echo = new Echo({
-                    host: 'http://localhost:6001',
                     broadcaster: "socket.io",
                     auth: {
                         headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'X-CSRF-TOKEN': this.getCookie('XSRF-TOKEN'),
                         }
                     }
 
                 });
 
+                setTimeout(() => {
+                    const channel = echo.private('notification.1');
 
-                const channel = echo.private('notification.1');
+                    console.log(channel)
 
-                channel.listen(".notification.new", (e) => {
-                    console.log(e);
-                });
-                // console.log(Echo);
+                    const result = channel.listen(".notification.new", (e) => {
+                        console.log(e);
+                    });
 
+                }, 1000)
             },
             methods: {
+                getCookie(name) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                }
             },
         });
     </script>
