@@ -32,7 +32,9 @@ class UserController extends Controller
 
     public function getUserStatus(Request $request)
     {
-        return new UserStatusResource($request->user());
+        $userStatus = new UserStatusResource($request->user());
+
+        return $this->user->ok($userStatus);
     }
 
     public function changeAvatar(UploadImageRequest $request)

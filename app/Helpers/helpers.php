@@ -25,8 +25,14 @@ if (!function_exists('getRandomString')) {
 }
 
 if (!function_exists('formatDate')) {
-    function formatDate($dateString, $pattern = "d-m-Y")
+    function formatDate($dateString, $from = "d/m/Y", $to = "Y-m-d")
     {
-        return date($pattern, strtotime($dateString));
+        $date = \DateTime::createFromFormat($from, $dateString);
+
+        if ($date) {
+            return $date->format($to);
+        }
+
+        return $dateString;
     }
 }

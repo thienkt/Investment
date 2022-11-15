@@ -75,7 +75,7 @@ class BaseService
         return response()->json($data, $status);
     }
 
-    public function error(Exception $e, $status = self::HTTP_INTERNAL_SERVER_ERROR, $msg = '')
+    public function error(\Throwable $e, $status = self::HTTP_INTERNAL_SERVER_ERROR, $msg = '')
     {
         return response()->json([
             'errors' => ['exception' => $e->getMessage()],

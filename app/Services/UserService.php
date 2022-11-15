@@ -183,17 +183,15 @@ class UserService extends BaseService
                 $resFront = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id/front', $options);
                 $resBack = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id/back', $options);
 
-                // "id_fake_warning" => "no", TODO: Check
-
                 $user->update([
                     "name" => $resFront->object?->name,
                     "address" => $resFront->object?->recent_location,
                     "identity_number" => $resFront->object?->id,
-                    "dob" => $resFront->object?->birth_day,
+                    "dob" => formatDate($resFront->object?->birth_day),
                     "gender" => $resFront->object?->gender,
                     "valid_date" => $resFront->object?->valid_date,
-                    "issue_place" => $resBack->object?->issue_place,
-                    "issue_date" => $resBack->object?->issue_date,
+                    "issue_place" => formatDate($resBack->object?->issue_place),
+                    "issue_date" => formatDate($resBack->object?->issue_date),
                     "is_verify" => true
                 ]);
 
