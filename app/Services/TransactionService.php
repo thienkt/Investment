@@ -23,7 +23,7 @@ class TransactionService extends BaseService
 
             $transaction = Transaction::create([
                 'id' =>  $transactionId,
-                'status' => 0,
+                'status' => BankService::STATUS_NEW,
                 'amount' => $amount,
                 'purchaser' => $userId
             ]);

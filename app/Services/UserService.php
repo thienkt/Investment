@@ -60,7 +60,11 @@ class UserService extends BaseService
                 $investmentAmount = 0;
 
                 foreach ($userPackage->transactions as $key => $transaction) {
-                    $investmentAmount += $transaction->amount;
+                    if (
+                        $transaction->status === BankService::STATUS_PAID
+                    ) {
+                        $investmentAmount += $transaction->amount;
+                    }
                 }
 
                 $userPackage->investment_amount = $investmentAmount;

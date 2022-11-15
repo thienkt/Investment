@@ -66,7 +66,7 @@ class CheckPayment extends Command
 
                 $this->bank->buyFundCertificate($transaction);
 
-                $transaction->status = 1;
+                $transaction->status = BankService::STATUS_PAID;
                 $transaction->save();
 
                 Notification::create([
