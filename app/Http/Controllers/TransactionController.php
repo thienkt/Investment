@@ -6,7 +6,7 @@ use App\Http\Resources\TransactionCollection;
 use App\Models\FundTransaction;
 use App\Models\Transaction;
 use App\Services\BankService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -19,7 +19,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::where('purchaser', '=', Auth::id())->get();
 
         return $this->bank->ok(new TransactionCollection($transactions));
     }

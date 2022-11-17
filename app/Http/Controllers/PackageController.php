@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendPersonalNotification;
 use App\Http\Requests\ChangePackageAvatarRequest;
 use App\Http\Requests\CreatePackageRequest;
 use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\PackageIdNeededRequest;
+use App\Models\Notification;
 use App\Services\BankService;
 use App\Services\PackageService;
 use App\Services\TransactionService;
@@ -104,9 +106,22 @@ class PackageController extends Controller
             return $this->package->error(new Exception('Create transaction failed'));
         }
 
-        Cache::put('payment-check-needed', now()->addMinutes(2)->toString());
+        Cache::put('payment-check-needed', now()->addMinutes(1)->toString());
 
         $bankInfo = $this->bank->getBankInfo();
+
+        $msg = 'Vui lòng thanh toán số tiền ' . number_format($request->amount) . ' để tiến hành mua CCQ. Giao dịch sẽ tự động hủy sau 15 phút nếu không thanh toán.';
+        $related_url = '/transactions/' . $ref;
+
+
+        Notification::create([
+            'user_id' => Auth::id(),
+            'message' => $msg,
+            'related_url' => $related_url,
+            'status' => Notification::STATUS_UNREAD
+        ]);
+
+        broadcast(new SendPersonalNotification(Auth::id(), $msg, $related_url));
 
         return $this->transaction->ok(
             array_merge(

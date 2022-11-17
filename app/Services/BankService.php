@@ -8,9 +8,11 @@ use App\Models\UserAsset;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class BankService extends VendorService
 {
+    const STATUS_CANCEL = -1;
     const STATUS_NEW = 0;
     const STATUS_PAID = 1;
     const STATUS_BOUGHT = 2;
@@ -157,7 +159,7 @@ class BankService extends VendorService
                         "value" => "NORMAL",
                         "period" => "ST"
                     ],
-                    "matchedDate" => date("Y-m-d", strtotime("2 days")),
+                    "matchedDate" => date("Y-m-d", strtotime("1 days")),
                     "periodicOrder" => false,
                     "purchaserId" => $accountId,
                     "accountId" => $accountId,
@@ -174,11 +176,12 @@ class BankService extends VendorService
             try {
                 $tradeResponse = $this->post($tradeUrl, $options);
             } catch (\Throwable $th) {
+                Log::error($th);
                 $userAsset->fundTransactions()->save(new FundTransaction([
                     'amount' => $amount,
                     'status' => self::STATUS_FAILURE,
                     'type' => self::TYPE_BUY,
-                    'ref' => $tradeResponse->id,
+                    'ref' => '',
                     'transaction_id' => $transaction->id,
                     'purchaser' => Auth::id()
                 ]));

@@ -239,9 +239,11 @@ class PackageService extends BaseService
             $balance = 0;
             $profit = 0;
             $investmentAmount = 0;
-
-            foreach ($userPackage->transactions as $key => $transaction) {
-                $investmentAmount += $transaction->amount;
+	    
+	    foreach ($userPackage->transactions as $key => $transaction) {
+                if ($transaction->status === BankService::STATUS_PAID && $transaction->type === BankService::TYPE_BUY) {
+                    $investmentAmount += $transaction->amount;
+                }
             }
 
             $profit -= $investmentAmount;
