@@ -93,6 +93,7 @@ class UserService extends BaseService
             $trans = FundTransaction::with('userAsset')->where('purchaser', '=', Auth::id())->orderBy('created_at')->get();
 
 
+            Log::info(":::::::::::$trans");
             foreach ($trans as $key => $transaction) {
                 if (!$started_at) {
                     $started_at = $transaction->created_at;
@@ -159,6 +160,10 @@ class UserService extends BaseService
 
     public function checkIdentityCardImage($user)
     {
+        if($user->is_verify) {
+            return $this->ok(new UserResource($user));
+        }
+
         try {
             $time = (int) floor(microtime(true) * 1000);
 
@@ -204,6 +209,5 @@ class UserService extends BaseService
         } catch (\Throwable $th) {
             return $this->error($th, self::HTTP_BAD_REQUEST, 'Invalid Image');
         }
-        return false;
     }
 }

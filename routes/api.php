@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +19,5 @@ use Illuminate\Support\Facades\Route;
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::get('/assets/{uid}/{name}',  [ImageController::class, 'getImage'])->name('packages.asset');
+
+Route::get('/banks/{bank_id}/{account_id}',  [BankController::class, 'getBankAccountInfo'])->name('packages.get-bank-account-info');

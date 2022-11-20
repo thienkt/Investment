@@ -6,7 +6,6 @@ use App\Models\FundTransaction;
 use App\Models\Transaction;
 use App\Models\UserAsset;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -23,7 +22,7 @@ class BankService extends VendorService
 
     const TYPE_BUY = 0;
     const TYPE_SELL = 1;
-    const TYPE_WITHDRAWN = 2;
+    const TYPE_WITHDRAW = 2;
 
 
     /**
@@ -132,7 +131,51 @@ class BankService extends VendorService
         }
     }
 
-    public function buyFundCertificate($transaction)
+    public function getBankAccountInfo($bankId, $accountId, $isCheck = false)
+    {
+        try {
+            $credential = $this->getCredential();
+            $bankConfig = Config('bank');
+
+            $options = [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $credential
+                ],
+                'body' => json_encode([
+                    'debtorAccountNumber' => $bankConfig['account_number'],
+                    'creditorAccountNumber' => $accountId,
+                    'creditorBankId' =>  $bankId
+                ])
+            ];
+
+            $getInfoUrl = $bankId === $bankConfig['id']
+                ? $bankConfig['internal_account_info_url']
+                : $bankConfig['external_account_info_url'];
+
+            $response = $this->post($getInfoUrl, $options);
+
+            if ($isCheck) return true;
+
+            return $this->ok([
+                'name' => $response->creditorInfo->name,
+                'account_number' => $response->creditorInfo->accountNumber,
+                'bank_id' => $response?->creditorInfo?->extBankId ?? $bankId,
+                'bank_code' => $response->creditorInfo->extBankCode ?? $bankConfig['code'],
+                'bank_name_en' => $response->creditorInfo->extBankNameEn ?? $bankConfig['name'],
+                'bank_name_vn' => $response->creditorInfo->extBankNameVn ?? $bankConfig['name'],
+                'currency' => $response->creditorInfo->currency,
+            ]);
+        } catch (\Throwable $th) {
+            Log::info($th);
+            $response = json_decode($th->getMessage());
+
+            return $this->error(new Exception($response->errorMessage->messages->vn));
+        }
+    }
+
+    public function buyFundCertificate($transaction, $matchedDate = 1)
     {
         $userPackage = $transaction->userPackage;
 
@@ -159,8 +202,8 @@ class BankService extends VendorService
                         "value" => "NORMAL",
                         "period" => "ST"
                     ],
-                    "matchedDate" => date("Y-m-d", strtotime("1 days")),
-                    "periodicOrder" => false,
+                    "matchedDate" => date("Y-m-d", strtotime("$matchedDate days")),
+                    "periodicOrder" => true,
                     "purchaserId" => $accountId,
                     "accountId" => $accountId,
                     "referralCode" => null
@@ -174,30 +217,32 @@ class BankService extends VendorService
             ]);
 
             try {
-                $tradeResponse = $this->post($tradeUrl, $options);
-            } catch (\Throwable $th) {
-                Log::error($th);
+                // $tradeResponse = $this->post($tradeUrl, $options);
                 $userAsset->fundTransactions()->save(new FundTransaction([
                     'amount' => $amount,
-                    'status' => self::STATUS_FAILURE,
+                    'status' => self::STATUS_NEW,
                     'type' => self::TYPE_BUY,
-                    'ref' => '',
+                    // 'ref' => $tradeResponse->id,
                     'transaction_id' => $transaction->id,
-                    'purchaser' => Auth::id()
+                    'purchaser' => $transaction->purchaser
+
                 ]));
-
-                return;
+            } catch (\Throwable $th) {
+                Log::error($th);
+                if ($matchedDate < 4) {
+                    $this->buyFundCertificate($transaction, $matchedDate + 1);
+                } else {
+                    $userAsset->fundTransactions()->save(new FundTransaction([
+                        'amount' => $amount,
+                        'status' => self::STATUS_FAILURE,
+                        'type' => self::TYPE_BUY,
+                        'ref' => '',
+                        'transaction_id' => $transaction->id,
+                        'purchaser' => $transaction->purchaser
+                    ]));
+                    throw $th;
+                }
             }
-
-            $userAsset->fundTransactions()->save(new FundTransaction([
-                'amount' => $amount,
-                'status' => self::STATUS_NEW,
-                'type' => self::TYPE_BUY,
-                'ref' => $tradeResponse->id,
-                'transaction_id' => $transaction->id,
-                'purchaser' => Auth::id()
-
-            ]));
         }
     }
 

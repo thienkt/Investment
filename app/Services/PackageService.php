@@ -97,7 +97,9 @@ class PackageService extends BaseService
         try {
             $package = Package::findOrFail($id);
 
-            if ($package->owners()->wherePivot('user_id', '=', Auth::id())->first()) {
+            if ($package->owners()->wherePivot('user_id', '=', Auth::id())
+                ->wherePivot('deleted_at', null)->first()
+            ) {
                 return $this->error(new Exception('You have already cloned this package.'), self::HTTP_FORBIDDEN);
             }
 
@@ -239,8 +241,8 @@ class PackageService extends BaseService
             $balance = 0;
             $profit = 0;
             $investmentAmount = 0;
-	    
-	    foreach ($userPackage->transactions as $key => $transaction) {
+
+            foreach ($userPackage->transactions as $key => $transaction) {
                 if ($transaction->status === BankService::STATUS_PAID && $transaction->type === BankService::TYPE_BUY) {
                     $investmentAmount += $transaction->amount;
                 }
@@ -252,7 +254,6 @@ class PackageService extends BaseService
                 if ($transaction->status === BankService::STATUS_NEW && $transaction->type === BankService::TYPE_BUY) {
                     $balance += $transaction->amount;
                     $profit += $transaction->amount;
-                    Log::info($transaction->amount);
                 }
 
                 if ($transaction->status === BankService::STATUS_SOLD && $transaction->type === BankService::TYPE_SELL) {
@@ -272,12 +273,11 @@ class PackageService extends BaseService
 
             return $this->ok([
                 'id' => $package->id,
-                'package_id' => $package->package_id,
                 'avatar' => $package->owner?->avatar ?? Config('package.default_avatar'),
                 'is_default' => $package->is_default ?? false,
                 'name' => $package->name,
                 'allocation' => $package->funds ? new FundCollection($package->funds) : null,
-                'investment_amount' => $package->owner?->investment_amount ?? "0.000",
+                // 'investment_amount' => $package->owner?->investment_amount ?? "0.000",
                 'profit' => $profit,
                 'investment_amount' =>  $investmentAmount,
                 'balance' => $balance,
@@ -342,6 +342,7 @@ class PackageService extends BaseService
             )
                 ->select('*', 'packages.id as id')
                 ->where('user_packages.user_id', Auth::id())
+                ->where('user_packages.deleted_at', null)
                 ->orderBy('user_packages.id')
                 ->get();
 

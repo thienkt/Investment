@@ -50,8 +50,8 @@ class CheckPayment extends Command
         $transactionList = [];
         $transactionData = [];
 
-        if ($checkNeededTime === $now || date('i') % 10 === 0) {
-        // if (true) {
+        // if ($checkNeededTime === $now || date('i') % 10 === 0) {
+            if (true) {
             $bankHistory = $this->bank->getTransactionHistory();
 
             foreach ($bankHistory as $key => $tran) {
@@ -64,7 +64,12 @@ class CheckPayment extends Command
                 }
             }
 
-            $transactions = Transaction::whereIn('id', $transactionList)->where('status', '=', $this->bank::STATUS_NEW)->get();
+            $transactions = Transaction::whereIn('id', $transactionList)->where(
+                [
+                    'status' => $this->bank::STATUS_NEW,
+                    'type' => $this->bank::TYPE_BUY,
+                ]
+            )->get();
 
             foreach ($transactions as $transaction) {
 
@@ -107,7 +112,7 @@ class CheckPayment extends Command
         }
 
         if (sizeof($expiredTransactions) > 0) {
-            Transaction::where('status', '=', $this->bank::STATUS_NEW)->whereTime('created_at', '<=', now()->subMinutes(150))->update([
+            Transaction::where('status', '=', $this->bank::STATUS_NEW)->whereTime('created_at', '<=', now()->subMinutes(15))->update([
                 'status' => BankService::STATUS_CANCEL
             ]);
         }

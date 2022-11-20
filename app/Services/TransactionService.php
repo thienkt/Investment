@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionService extends BaseService
 {
-    public function create($userId, $packageId, $amount)
+    public function create($userId, $packageId, $amount, $type = BankService::TYPE_BUY)
     {
         try {
             $userId = Auth::user()->id;
@@ -25,10 +25,15 @@ class TransactionService extends BaseService
                 'id' =>  $transactionId,
                 'status' => BankService::STATUS_NEW,
                 'amount' => $amount,
-                'purchaser' => $userId
+                'purchaser' => $userId,
+                'type' => $type
             ]);
 
             $userPackage->transactions()->save($transaction);
+
+            if( $type === BankService::TYPE_WITHDRAW) {
+                return $transaction;
+            }
 
             return $transactionId;
         } catch (\Throwable $th) {

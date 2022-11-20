@@ -23,6 +23,7 @@ class Fund extends Model
         'code',
         'name',
         'description',
+        'current_value',
         'historical_data_url',
     ];
 

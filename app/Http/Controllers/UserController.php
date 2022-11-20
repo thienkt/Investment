@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function getUserInfo(Request $request)
     {
-        return new UserResource($request->user());
+        return $this->user->ok(new UserResource($request->user()));
     }
 
     public function getAssetInfo(Request $request)

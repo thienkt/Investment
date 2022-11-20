@@ -15,13 +15,13 @@ class PackageCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->map(function ($data) {
-            return [
+            return removeNullish([
                 'avatar' => $data->avatar ?? Config('package.default_avatar'),
                 'id' => $data->id,
                 'name' => $data->name,
-                'year_average' => +$data->year_average,
-                'investment_amount' => $data->investment_amount
-            ];
+                // 'year_average' => +$data->year_average,
+                // 'investment_amount' => $data->investment_amount
+            ]);
         });
     }
 }
