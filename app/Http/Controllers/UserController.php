@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\DeleteUserRequest;
 use App\Http\Requests\UploadImageRequest;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserStatusResource;
 use App\Models\User;
@@ -10,6 +14,7 @@ use App\Services\BaseService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,6 +23,128 @@ class UserController extends Controller
     public function __construct(UserService $user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @QAparam page nullable [0-9]+
+     * @QAparam per_page nullable [0-9]+
+     * @QAparam order_by string nullable 'name'|'email'|'identity_number'|'dob'|'gender'|'avatar'|'created_at'|'is_verify'|'email_verified_at'|'role'|'identity_image_front'|'identity_image_back'|'issue_place'|'issue_date'|'valid_date'
+     * @QAparam sort_by string nullable 'desc'|'asc'
+     * @QAparam email string nullable
+     * @QAparam name string nullable
+     */
+    public function index(Request $request): UserCollection
+    {
+        try {
+            $perPage = 2;
+            $orderBy = 'created_at'; // $fields
+            $sortBy = 'desc'; // $orders
+            $orders = ['desc', 'asc'];
+            $fields = ['name', 'email', 'identity_number', 'dob', 'gender', 'avatar', 'created_at', 'is_verify', 'email_verified_at', 'role', 'identity_image_front', 'identity_image_back', 'issue_place', 'issue_date', 'valid_date'];
+
+            if ($request->has('per_page') && is_numeric($request->input('per_page'))) {
+                $perPage = $request->input('per_page');
+            }
+
+            if ($request->has('order_by') && in_array($request->input('order_by'), $fields)) {
+                $orderBy = $request->input('order_by');
+            }
+
+            if ($request->has('sort_by') && in_array($request->input('sort_by'), $orders)) {
+                $sortBy = $request->input('sort_by');
+            }
+
+            $query = User::orderBy($orderBy, $sortBy);
+
+            if ($request->has('name') && $request->input('name')) {
+                $query = $query->whereRaw("name LIKE '%" . $request->input('name') . "%' ");
+            }
+
+            if ($request->has('email') && $request->input('email')) {
+                $query = $query->whereRaw("email LIKE '%" . $request->input('email') . "%' ");
+            }
+
+            $data = $query->paginate($perPage);
+
+            return new UserCollection($data);
+        } catch (\Throwable $th) {
+            return ($th);
+        }
+    }
+
+    /**
+     * @QAParam ids array
+     */
+    public function remove(DeleteUserRequest $request)
+    {
+        $result = User::destroy($request->input('ids'));
+
+        return $result;
+    }
+
+    public function update($userId, UpdateUserRequest $request)
+    {
+        try {
+            $data = $request->validated();
+
+            $user = User::findOrFail($userId);
+
+            if (isset($data['email'])) {
+                $user->email = $data['email'];
+            }
+
+            if (isset($data['active'])) {
+                $user->email_verified_at = $data['active'] ? now() : null;
+            }
+
+            if (isset($data['role'])) {
+                $user->role = $data['role'];
+            }
+
+            $user->save();
+
+            return response()->json(new UserResource($user));
+        } catch (\Throwable $th) {
+            dd($th);
+            return "Không thể cập nhật thông tin người dùng";
+        }
+    }
+
+    public function destroy($userId)
+    {
+        try {
+            $result = User::destroy([$userId]);
+
+            return $result;
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    }
+
+    public function store(CreateUserRequest $request)
+    {
+        try {
+            return User::create([
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role
+            ]);
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function sendVerifyEmail($userId)
+    {
+        try {
+            $user = User::findOrFail($userId);
+            $user->sendEmailVerificationNotification();
+
+            return true;
+        } catch (\Throwable $th) {
+
+            return false;
+        }
     }
 
     public function getUserInfo(Request $request)

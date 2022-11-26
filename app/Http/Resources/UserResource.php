@@ -25,12 +25,12 @@ class UserResource extends JsonResource
             'avatar' => $this->avatar,
             'is_verify' => (bool) $this->is_verify,
             'is_activated' => (bool)$this->email_verified_at,
-            // 'portrait' => $this->portrait,
             'identity_image_front' => $this->identity_image_front,
             'identity_image_back' => $this->identity_image_back,
             'issue_place' => $this->issue_place,
             'issue_date' => $this->issue_date,
             'valid_date' => $this->valid_date,
+            'role' => $this->role
         ];
     }
 }
