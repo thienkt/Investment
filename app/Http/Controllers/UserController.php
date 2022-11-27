@@ -25,6 +25,15 @@ class UserController extends Controller
         $this->user = $user;
     }
 
+    public function show($userId)
+    {
+        try {
+            return response()->json(new UserResource(User::findOrFail($userId)));
+        } catch (\Throwable $th) {
+            return "Not found";
+        }
+    }
+
     /**
      * @QAparam page nullable [0-9]+
      * @QAparam per_page nullable [0-9]+
@@ -33,7 +42,7 @@ class UserController extends Controller
      * @QAparam email string nullable
      * @QAparam name string nullable
      */
-    public function index(Request $request): UserCollection
+    public function index(Request $request)
     {
         try {
             $perPage = 2;
@@ -57,16 +66,17 @@ class UserController extends Controller
             $query = User::orderBy($orderBy, $sortBy);
 
             if ($request->has('name') && $request->input('name')) {
-                $query = $query->whereRaw("name LIKE '%" . $request->input('name') . "%' ");
+                $query = $query->whereRaw("name ILIKE '%" . $request->input('name') . "%' ");
             }
 
             if ($request->has('email') && $request->input('email')) {
-                $query = $query->whereRaw("email LIKE '%" . $request->input('email') . "%' ");
+                $query = $query->whereRaw("email ILIKE '%" . $request->input('email') . "%' ");
             }
 
             $data = $query->paginate($perPage);
+            $data->data = new UserCollection($data);
 
-            return new UserCollection($data);
+            return response()->json($data);
         } catch (\Throwable $th) {
             return ($th);
         }

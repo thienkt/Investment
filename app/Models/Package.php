@@ -21,6 +21,10 @@ class Package extends Model
         'year_average'
     ];
 
+    protected $hidden = [
+        'year_average'
+    ];
+
     public function owners()
     {
         return $this->belongsToMany(User::class, 'user_packages')->withPivot('investment_amount', 'avatar');

@@ -27,6 +27,10 @@ class Fund extends Model
         'historical_data_url',
     ];
 
+    protected $hidden = [
+        'historical_data_url',
+    ];
+
     public function credential(): BelongsTo
     {
         return $this->belongsTo(Credential::class);

@@ -14,14 +14,20 @@ class SendSystemNotification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private $message;
+    private $relatedUrl;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        $message,
+        $relatedUrl,
+    ) {
+        $this->message = $message;
+        $this->relatedUrl = $relatedUrl;
     }
 
     /**
@@ -32,5 +38,19 @@ class SendSystemNotification implements ShouldBroadcast
     public function broadcastOn()
     {
         return new PresenceChannel('system.notification');
+    }
+
+    public function broadcastAs()
+    {
+        return 'notification.new';
+    }
+
+
+    public function broadcastWith()
+    {
+        return [
+            'message' => $this->message,
+            'related_url' => $this->relatedUrl
+        ];
     }
 }
