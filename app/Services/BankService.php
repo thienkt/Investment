@@ -35,15 +35,36 @@ class BankService extends VendorService
 
             if (!$credential) {
                 $bankConfig = Config('bank');
-                $options = [
-                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
-                    'body' => json_encode([
-                        'username' => base64_decode($bankConfig['username']),
-                        'password' => base64_decode($bankConfig['password']),
-                    ])
-                ];
-                $response = $this->post($bankConfig['login_url'], $options);
-                $credential = $response->access_token;
+
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://ebank.tpb.vn/gateway/api/auth/login',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => '{"username":"' . base64_decode($bankConfig['username']) . '","password":"' . base64_decode($bankConfig['password']) . '","step_2FA":"VERIFY"}',
+                    CURLOPT_HTTPHEADER => array(
+                        'Accept: application/json, text/plain, */*',
+                        'Accept-Language: en-US,en;q=0.7',
+                        'Authorization: Bearer',
+                        'Connection: keep-alive',
+                        'Content-Type: application/json',
+                        'Sec-Fetch-Dest: empty',
+                        'Sec-Fetch-Mode: cors',
+                        'Sec-Fetch-Site: same-origin',
+                        'Sec-GPC: 1',
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                $credential = json_decode($response)->access_token;
+
                 Cache::put('bank:::credential', $credential, now()->addMinutes(5));
             }
 
@@ -137,24 +158,42 @@ class BankService extends VendorService
             $credential = $this->getCredential();
             $bankConfig = Config('bank');
 
-            $options = [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $credential
-                ],
-                'body' => json_encode([
-                    'debtorAccountNumber' => $bankConfig['account_number'],
-                    'creditorAccountNumber' => $accountId,
-                    'creditorBankId' =>  $bankId
-                ])
-            ];
-
             $getInfoUrl = $bankId === $bankConfig['id']
                 ? $bankConfig['internal_account_info_url']
                 : $bankConfig['external_account_info_url'];
 
-            $response = $this->post($getInfoUrl, $options);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $getInfoUrl,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode([
+                    'debtorAccountNumber' => $bankConfig['account_number'],
+                    'creditorAccountNumber' => $accountId,
+                    'creditorBankId' =>  $bankId
+                ]),
+                CURLOPT_HTTPHEADER => array(
+                    'Accept: application/json, text/plain, */*',
+                    'Accept-Language: en-US,en;q=0.9',
+                    "Authorization: Bearer  $credential",
+                    'Connection: keep-alive',
+                    'Content-Type: application/json',
+                    'Sec-Fetch-Dest: empty',
+                    'Sec-Fetch-Mode: cors',
+                    'Sec-Fetch-Site: same-origin',
+                    'Sec-GPC: 1',
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $response = json_decode($response);
 
             if ($isCheck) return true;
 
@@ -171,7 +210,7 @@ class BankService extends VendorService
             Log::info($th);
             $response = json_decode($th->getMessage());
 
-            return $this->error(new Exception($response->errorMessage->messages->vn));
+            return $this->error(new Exception($response?->errorMessage?->messages?->vn));
         }
     }
 

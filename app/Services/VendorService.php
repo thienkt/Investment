@@ -9,6 +9,7 @@ use GuzzleHttp\HandlerStack;
 use Kevinrob\GuzzleCache\CacheMiddleware;
 use Exception;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Support\Facades\Log;
 
 class VendorService extends BaseService
 {
@@ -47,7 +48,7 @@ class VendorService extends BaseService
         } catch (ClientException $e) {
             $response = $e->getResponse();
             $responseBodyAsString = $response->getBody()->getContents();
-
+            Log::warning($responseBodyAsString);
             throw new Exception($responseBodyAsString);
         }
     }
