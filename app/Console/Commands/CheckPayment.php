@@ -51,7 +51,7 @@ class CheckPayment extends Command
         $transactionData = [];
 
         // if ($checkNeededTime === $now || date('i') % 10 === 0) {
-        if (false) {
+        if (true) {
             $bankHistory = $this->bank->getTransactionHistory();
 
             foreach ($bankHistory as $key => $tran) {

@@ -19,9 +19,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //TODO: $schedule->command('price:daily')->dailyAt();
-        $schedule->command('price:daily')->daily();
-
+        $schedule->command('price:daily')->dailyAt('17:00');
+        $schedule->command('buy:daily')->daily();
+        $schedule->command('sell:daily')->daily();
         $schedule->command('payment:check')->everyMinute();
     }
 

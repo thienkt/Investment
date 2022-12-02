@@ -30,7 +30,8 @@ class UserResource extends JsonResource
             'issue_place' => $this->issue_place,
             'issue_date' => $this->issue_date,
             'valid_date' => $this->valid_date,
-            'role' => $this->role
+            'role' => $this->role,
+            'created_at' => $this->created_at
         ];
     }
 }

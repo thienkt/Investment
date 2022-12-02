@@ -9,7 +9,9 @@ use App\Http\Requests\UploadImageRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserStatusResource;
+use App\Models\Transaction;
 use App\Models\User;
+use App\Services\BankService;
 use App\Services\BaseService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -19,10 +21,12 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     protected $user;
+    protected $bank;
 
-    public function __construct(UserService $user)
+    public function __construct(UserService $user, BankService $bank)
     {
         $this->user = $user;
+        $this->bank = $bank;
     }
 
     public function show($userId)

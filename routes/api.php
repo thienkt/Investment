@@ -20,4 +20,6 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::get('/assets/{uid}/{name}',  [ImageController::class, 'getImage'])->name('packages.asset');
 
-Route::get('/banks/{bank_id}/{account_id}',  [BankController::class, 'getBankAccountInfo'])->name('packages.get-bank-account-info');
+Route::get('/banks/{bank_id}/{account_id}', [BankController::class, 'getBankAccountInfo'])->name('packages.get-bank-account-info');
+
+Route::get('/banks/used', [BankController::class, 'getBankAccountUsed'])->name('banks.used');
