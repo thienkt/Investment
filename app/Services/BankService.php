@@ -2,15 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\Fund;
 use App\Models\FundTransaction;
 use App\Models\Transaction;
 use App\Models\UserAsset;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class BankService extends VendorService
 {
+    const STATUS_CANCEL = -1;
     const STATUS_NEW = 0;
     const STATUS_PAID = 1;
     const STATUS_BOUGHT = 2;
@@ -21,7 +23,7 @@ class BankService extends VendorService
 
     const TYPE_BUY = 0;
     const TYPE_SELL = 1;
-    const TYPE_WITHDRAWN = 2;
+    const TYPE_WITHDRAW = 2;
 
 
     /**
@@ -34,15 +36,41 @@ class BankService extends VendorService
 
             if (!$credential) {
                 $bankConfig = Config('bank');
-                $options = [
-                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
-                    'body' => json_encode([
-                        'username' => base64_decode($bankConfig['username']),
-                        'password' => base64_decode($bankConfig['password']),
-                    ])
-                ];
-                $response = $this->post($bankConfig['login_url'], $options);
-                $credential = $response->access_token;
+
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://ebank.tpb.vn/gateway/api/auth/login',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => '{"username":"' . base64_decode($bankConfig['username']) . '","password":"' . base64_decode($bankConfig['password']) . '","step_2FA":"VERIFY"}',
+                    CURLOPT_HTTPHEADER => array(
+                        'Accept: application/json, text/plain, */*',
+                        'Accept-Language: en-US,en;q=0.7',
+                        'Authorization: Bearer',
+                        'Connection: keep-alive',
+                        'Content-Type: application/json',
+                        'Sec-Fetch-Dest: empty',
+                        'Sec-Fetch-Mode: cors',
+                        'Sec-Fetch-Site: same-origin',
+                        'Sec-GPC: 1',
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+
+                curl_close($curl);
+
+                Log::info($response);
+
+                $credential = json_decode($response)->access_token;
+
                 Cache::put('bank:::credential', $credential, now()->addMinutes(5));
             }
 
@@ -68,22 +96,37 @@ class BankService extends VendorService
         try {
             $credential = $this->getCredential();
             $bankConfig = Config('bank');
-            $options = [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $credential
-                ],
-                'body' => json_encode([
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $bankConfig['get_history_url'],
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode([
                     'accountNo' => $bankConfig['account_number'],
                     'currency' => "VND",
                     'fromDate' => date("Ymd", strtotime("-1 days")),
                     'keyword' => $keyword,
                     'toDate' => date("Ymd")
-                ])
-            ];
+                ]),
+                CURLOPT_HTTPHEADER => array(
+                    'APP_VERSION: 2022.10.17',
+                    'Accept: application/json, text/plain, */*',
+                    'Accept-Language: en-US,en;q=0.9',
+                    "Authorization: Bearer $credential",
+                    'Connection: keep-alive',
+                    'Content-Type: application/json',
+                ),
+            ));
 
-            $response = $this->post($bankConfig['get_history_url'], $options);
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $response = json_decode($response);
 
             return $response->transactionInfos;
         } catch (Exception $e) {
@@ -130,13 +173,80 @@ class BankService extends VendorService
         }
     }
 
-    public function buyFundCertificate($transaction)
+    public function getBankAccountInfo($bankId, $accountId, $isCheck = false, $raw = false)
+    {
+        try {
+            $credential = $this->getCredential();
+            $bankConfig = Config('bank');
+
+            $getInfoUrl = $bankId === $bankConfig['id']
+                ? $bankConfig['internal_account_info_url']
+                : $bankConfig['external_account_info_url'];
+
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $getInfoUrl,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode([
+                    'debtorAccountNumber' => $bankConfig['account_number'],
+                    'creditorAccountNumber' => $accountId,
+                    'creditorBankId' =>  $bankId
+                ]),
+                CURLOPT_HTTPHEADER => array(
+                    'Accept: application/json, text/plain, */*',
+                    'Accept-Language: en-US,en;q=0.9',
+                    "Authorization: Bearer  $credential",
+                    'Connection: keep-alive',
+                    'Content-Type: application/json',
+                    'Sec-Fetch-Dest: empty',
+                    'Sec-Fetch-Mode: cors',
+                    'Sec-Fetch-Site: same-origin',
+                    'Sec-GPC: 1',
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $response = json_decode($response);
+
+            if ($isCheck) return true;
+
+            $bankInfo = [
+                'name' => $response->creditorInfo->name,
+                'account_number' => $response->creditorInfo->accountNumber,
+                'bank_id' => $response?->creditorInfo?->extBankId ?? $bankId,
+                'bank_code' => $response->creditorInfo->extBankCode ?? $bankConfig['code'],
+                'bank_name_en' => $response->creditorInfo->extBankNameEn ?? $bankConfig['name'],
+                'bank_name_vn' => $response->creditorInfo->extBankNameVn ?? $bankConfig['name'],
+                'currency' => $response->creditorInfo->currency,
+            ];
+
+            if ($raw) return $bankInfo;
+
+            return $this->ok($bankInfo);
+        } catch (\Throwable $th) {
+            if ($raw) return false;
+
+            Log::info($th);
+            $response = json_decode($th->getMessage());
+
+            return $this->error(new Exception("Tài khoản ngân hàng không tồn tại"));
+        }
+    }
+
+    public function buyFundCertificate($transaction, $matchedDate = 1)
     {
         $userPackage = $transaction->userPackage;
 
         foreach ($userPackage->package->funds as $index => $fund) {
             $vendorConfig = Config('vendor');
-            $tradeUrl = $vendorConfig['trade_url'];
             $accountId = $vendorConfig['account_id'];
             $percentage = $fund->pivot->allocation_percentage;
             $amount = $transaction->amount * $percentage / 100;
@@ -157,8 +267,8 @@ class BankService extends VendorService
                         "value" => "NORMAL",
                         "period" => "ST"
                     ],
-                    "matchedDate" => date("Y-m-d", strtotime("2 days")),
-                    "periodicOrder" => false,
+                    "matchedDate" => date("Y-m-d", strtotime("$matchedDate days")),
+                    "periodicOrder" => true,
                     "purchaserId" => $accountId,
                     "accountId" => $accountId,
                     "referralCode" => null
@@ -172,29 +282,28 @@ class BankService extends VendorService
             ]);
 
             try {
-                $tradeResponse = $this->post($tradeUrl, $options);
+                // $tradeResponse = $this->post($tradeUrl, $options);
+                $userAsset->fundTransactions()->save(new FundTransaction([
+                    'amount' => $amount,
+                    'status' => self::STATUS_NEW,
+                    'type' => self::TYPE_BUY,
+                    // 'ref' => $tradeResponse->id,
+                    'transaction_id' => $transaction->id,
+                    'purchaser' => $transaction->purchaser
+
+                ]));
             } catch (\Throwable $th) {
+                Log::error($th);
                 $userAsset->fundTransactions()->save(new FundTransaction([
                     'amount' => $amount,
                     'status' => self::STATUS_FAILURE,
                     'type' => self::TYPE_BUY,
-                    'ref' => $tradeResponse->id,
+                    'ref' => '',
                     'transaction_id' => $transaction->id,
-                    'purchaser' => Auth::id()
+                    'purchaser' => $transaction->purchaser
                 ]));
-
-                return;
+                throw $th;
             }
-
-            $userAsset->fundTransactions()->save(new FundTransaction([
-                'amount' => $amount,
-                'status' => self::STATUS_NEW,
-                'type' => self::TYPE_BUY,
-                'ref' => $tradeResponse->id,
-                'transaction_id' => $transaction->id,
-                'purchaser' => Auth::id()
-
-            ]));
         }
     }
 
@@ -215,5 +324,44 @@ class BankService extends VendorService
         ];
 
         $this->put($tradeCancelUrl, $options);
+    }
+
+    public function transFundCertificate($fundCode, $amount, $matchedDate = 1, $action = "BUY")
+    {
+        try {
+            $fund = Fund::where('code', '=', $fundCode)->first();
+
+            $vendorConfig = Config('vendor');
+            $tradeUrl = $vendorConfig['trade_url'];
+            $options = [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $fund->credential->token
+                ],
+                'body' => json_encode([
+                    "action" => $action,
+                    "transactionValue" => $amount,
+                    "productCode" => $fund->code,
+                    "autoPurchase" => 1,
+                    "type" => [
+                        "value" => "NORMAL",
+                        "period" => "ST"
+                    ],
+                    "matchedDate" => date("Y-m-d", strtotime("$matchedDate days")),
+                ])
+            ];
+
+            $tradeResponse = $this->post($tradeUrl, $options);
+
+            return $tradeResponse->id;
+        } catch (\Throwable $th) {
+            if ($matchedDate < 6) {
+                return $this->transFundCertificate($fundCode, $amount,  $matchedDate + 1, $action);
+            } else {
+                Log::error($matchedDate);
+                throw $th;
+            }
+        }
     }
 }

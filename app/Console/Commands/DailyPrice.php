@@ -2,17 +2,21 @@
 
 namespace App\Console\Commands;
 
+use App\Events\SendPersonalNotification;
+use App\Services\BankService;
 use App\Services\FundService;
 use Illuminate\Console\Command;
 
 class DailyPrice extends Command
 {
     private $fund;
+    private $bank;
 
-    public function __construct(FundService $fund)
+    public function __construct(FundService $fund, BankService $bank)
     {
         parent::__construct();
         $this->fund = $fund;
+        $this->bank = $bank;
     }
 
     /**

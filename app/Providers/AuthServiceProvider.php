@@ -6,6 +6,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,10 +30,12 @@ class AuthServiceProvider extends ServiceProvider
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
-                ->subject(Lang::get('Verify Email Address'))
-                ->line(Lang::get('Please click the button below to verify your email address.'))
-                ->action(Lang::get('Verify Email Address'), str_replace(env('APP_URL') . '/api/email', env('SPA_URL'), $url))
-                ->line(Lang::get('If you did not create an account, no further action is required.'));
+                ->subject(Lang::get('Xác thực địa chỉ email'))
+                ->greeting(Lang::get('Xin chào'))
+                ->line(Lang::get('Hãy xác minh địa chỉ email qua liên kết sau.'))
+                ->action(Lang::get('Xác nhận email'), str_replace('api/auth/email/', '', $url))
+                ->line(Lang::get('Nếu bạn không gửi yêu cầu xác thực, hãy bỏ qua email này.'))
+                ->salutation(Lang::get('Trân trọng cảm ơn Quý khách đã tin tưởng sử dụng dịch vụ!'));
         });
     }
 }

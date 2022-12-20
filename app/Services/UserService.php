@@ -60,7 +60,11 @@ class UserService extends BaseService
                 $investmentAmount = 0;
 
                 foreach ($userPackage->transactions as $key => $transaction) {
-                    $investmentAmount += $transaction->amount;
+                    if (
+                        $transaction->status === BankService::STATUS_PAID
+                    ) {
+                        $investmentAmount += $transaction->amount;
+                    }
                 }
 
                 $userPackage->investment_amount = $investmentAmount;
@@ -89,6 +93,7 @@ class UserService extends BaseService
             $trans = FundTransaction::with('userAsset')->where('purchaser', '=', Auth::id())->orderBy('created_at')->get();
 
 
+            Log::info(":::::::::::$trans");
             foreach ($trans as $key => $transaction) {
                 if (!$started_at) {
                     $started_at = $transaction->created_at;
@@ -155,6 +160,10 @@ class UserService extends BaseService
 
     public function checkIdentityCardImage($user)
     {
+        if($user->is_verify) {
+            return $this->ok(new UserResource($user));
+        }
+
         try {
             $time = (int) floor(microtime(true) * 1000);
 
@@ -183,17 +192,15 @@ class UserService extends BaseService
                 $resFront = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id/front', $options);
                 $resBack = $this->vendor->post(env('VNPT_EKYC_DOMAIN') . '/ai/v1/ocr/id/back', $options);
 
-                // "id_fake_warning" => "no", TODO: Check
-
                 $user->update([
                     "name" => $resFront->object?->name,
                     "address" => $resFront->object?->recent_location,
                     "identity_number" => $resFront->object?->id,
-                    "dob" => $resFront->object?->birth_day,
+                    "dob" => formatDate($resFront->object?->birth_day),
                     "gender" => $resFront->object?->gender,
                     "valid_date" => $resFront->object?->valid_date,
-                    "issue_place" => $resBack->object?->issue_place,
-                    "issue_date" => $resBack->object?->issue_date,
+                    "issue_place" => formatDate($resBack->object?->issue_place),
+                    "issue_date" => formatDate($resBack->object?->issue_date),
                     "is_verify" => true
                 ]);
 
@@ -202,6 +209,5 @@ class UserService extends BaseService
         } catch (\Throwable $th) {
             return $this->error($th, self::HTTP_BAD_REQUEST, 'Invalid Image');
         }
-        return false;
     }
 }

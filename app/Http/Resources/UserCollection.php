@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PackageCollection extends ResourceCollection
+class UserCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,13 +15,7 @@ class PackageCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->map(function ($data) {
-            return removeNullish([
-                'avatar' => $data->avatar ?? Config('package.default_avatar'),
-                'id' => $data->id,
-                'name' => $data->name,
-                // 'year_average' => +$data->year_average,
-                // 'investment_amount' => $data->investment_amount
-            ]);
+            return new UserResource($data);
         });
     }
 }

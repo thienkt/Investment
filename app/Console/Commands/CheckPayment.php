@@ -41,13 +41,17 @@ class CheckPayment extends Command
     public function handle()
     {
         $checkNeededTime = Cache::get('payment-check-needed');
+
+        Log::info($checkNeededTime);
+
         $now = now()->toString();
         $matches = array();
 
         $transactionList = [];
         $transactionData = [];
 
-        if ($checkNeededTime === $now || date('i') % 15 === 0) {
+        // if ($checkNeededTime === $now || date('i') % 10 === 0) {
+        if (true) {
             $bankHistory = $this->bank->getTransactionHistory();
 
             foreach ($bankHistory as $key => $tran) {
@@ -60,24 +64,57 @@ class CheckPayment extends Command
                 }
             }
 
-            $transactions = Transaction::whereIn('id', $transactionList)->where('status', '=', $this->bank::STATUS_NEW)->get();
+            $transactions = Transaction::whereIn('id', $transactionList)->where(
+                [
+                    'status' => $this->bank::STATUS_NEW,
+                    'type' => $this->bank::TYPE_BUY,
+                ]
+            )->get();
 
             foreach ($transactions as $transaction) {
 
                 $this->bank->buyFundCertificate($transaction);
 
-                $transaction->status = 1;
+                $transaction->status = BankService::STATUS_PAID;
                 $transaction->save();
+                $msg = 'Bạn đã nạp thành công số tiền ' . $transaction->amount;
+                $related_url = '/transactions/' . $transaction->id;
 
                 Notification::create([
                     'user_id' => $transaction->purchaser,
-                    'message' => $transaction->id . ': ' . 'Payment success',
-                    'related_url' => '',
+                    'message' => $msg,
+                    'related_url' => $related_url,
                     'status' => Notification::STATUS_UNREAD
                 ]);
 
-                broadcast(new SendPersonalNotification($transaction->purchaser, $transaction->id . ': ' . 'Payment success', ''));
+                broadcast(new SendPersonalNotification($transaction->purchaser, $msg, $related_url));
+
+                Log::info($transaction->id . '::::' . $transaction->amount . '::::' . 'PAID');
             }
+        }
+
+        $expiredTransactions = Transaction::where('status', '=', $this->bank::STATUS_NEW)->whereTime('created_at', '<=', now()->subMinutes(15))->get();
+
+        foreach ($expiredTransactions as $key => $transaction) {
+            $msg = 'Giao dịch của bạn đã bị hủy do chưa thanh toán';
+            $related_url = '/transactions/' . $transaction->id;
+
+            Notification::create([
+                'user_id' => $transaction->purchaser,
+                'message' => $msg,
+                'related_url' => $related_url,
+                'status' => Notification::STATUS_UNREAD
+            ]);
+
+            broadcast(new SendPersonalNotification($transaction->purchaser, $msg, $related_url));
+
+            Log::info($transaction->id . '::::' . $transaction->amount . '::::' . 'CANCELED');
+        }
+
+        if (sizeof($expiredTransactions) > 0) {
+            Transaction::where('status', '=', $this->bank::STATUS_NEW)->whereTime('created_at', '<=', now()->subMinutes(15))->update([
+                'status' => BankService::STATUS_CANCEL
+            ]);
         }
     }
 }

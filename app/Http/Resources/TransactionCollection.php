@@ -21,8 +21,8 @@ class TransactionCollection extends ResourceCollection
                 "user_package_id" => $data->user_package_id,
                 "transaction_type" => $data->type,
                 "payment_status" => $data->status,
-                "updated_at" => formatDate($data->updated_at),
-                "created_at" => formatDate($data->created_at),
+                "updated_at" => date("d/m/Y", strtotime($data->updated_at)),
+                "created_at" => date("d/m/Y", strtotime($data->created_at)),
             ];
         });
     }

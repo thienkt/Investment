@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\VendorService;
-use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
